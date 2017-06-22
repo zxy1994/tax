@@ -29,7 +29,7 @@
 		<artifactId>junit</artifactId>
 		<version>${junit.version}</version>
 		<!--保留到测试 -->
-		<scope>test</scope>
+		<!-- <scope>test</scope> -->
 	</dependency>
 
 	<!-- jsp-api、servlet-api、el-api -->
@@ -135,7 +135,7 @@
 				<!-- 插件的配置信息 -->
 				<configuration>
 					<!-- 端口号 -->
-					<port>8000</port>
+					<port>8888</port>
 					<path>/</path>
 				</configuration>
 			</plugin>
