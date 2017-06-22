@@ -16,6 +16,9 @@
 		<hibernate.version>5.0.11.Final</hibernate.version>
 		<struts2.version>2.3.32</struts2.version>
 		<mysql.version>5.1.29</mysql.version>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <!-- 防止控制输出台中文乱码 -->
+		<argLine>-Dfile.encoding=UTF-8</argLine> 
 	</properties>
 	
   <!-- 依赖 -->
@@ -132,7 +135,7 @@
   
   
   
-  
+
   
   <modules>
   	<module>tax-entity</module>
