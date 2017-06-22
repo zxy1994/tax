@@ -7,4 +7,13 @@
   </parent>
   <artifactId>tax-web</artifactId>
   <packaging>war</packaging>
+  
+    <!-- 依赖注入 -->
+  <dependencies>
+  	<dependency>
+  		<groupId>com.zxy</groupId>
+    	<artifactId>tax-service</artifactId>
+    	<version>1.0.0-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>

@@ -6,4 +6,13 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>tax-service</artifactId>
+  
+  <!-- 依赖注入 -->
+  <dependencies>
+  	<dependency>
+  		<groupId>com.zxy</groupId>
+    	<artifactId>tax-dao</artifactId>
+    	<version>1.0.0-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>
