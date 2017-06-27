@@ -1,8 +1,8 @@
-package com.tax.service.impl;
+package com.test.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.tax.service.TestService;
+import com.test.service.TestService;
 
 @Service("testService")
 public class TestServiceImpl implements TestService {

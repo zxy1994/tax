@@ -16,6 +16,7 @@
 		<hibernate.version>5.0.11.Final</hibernate.version>
 		<struts2.version>2.3.31</struts2.version>
 		<mysql.version>5.1.29</mysql.version>
+		<c3p0.version>0.9.5.2</c3p0.version>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	    <!-- 防止控制输出台中文乱码 -->
 		<argLine>-Dfile.encoding=UTF-8</argLine> 
@@ -73,11 +74,19 @@
 		<artifactId>hibernate-core</artifactId>
 		<version>${hibernate.version}</version>
 	</dependency>
-	<dependency>
+	<!-- <dependency>
 		<groupId>org.hibernate</groupId>
 		<artifactId>hibernate-c3p0</artifactId>
 		<version>${hibernate.version}</version>
+	</dependency> -->
+	
+	<!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->
+	<dependency>
+	    <groupId>com.mchange</groupId>
+	    <artifactId>c3p0</artifactId>
+	    <version>${c3p0.version}</version>
 	</dependency>
+	
 	
 	<!-- 配struts2的2.3.2版 -->
 	<dependency>

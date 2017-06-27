@@ -1,10 +1,10 @@
-package cn.tax.action;
+package com.test.action;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-import com.tax.service.TestService;
+import com.test.service.TestService;
 
 public class TestAction extends ActionSupport  {
 	@Autowired

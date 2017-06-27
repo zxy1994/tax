@@ -3,7 +3,7 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<package name="test" namespace="/" extends="struts-default">
-		<action name="hello" class="cn.tax.action.TestAction" >
+		<action name="hello" class="com.test.action.TestAction" >
 			<result>/WEB-INF/jsp/index.jsp</result>
 		</action>
 	</package>
