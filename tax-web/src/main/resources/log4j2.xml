@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug">
+<!-- 这个status是表示log4j2这个功能自身的日志级别，这里我们不需要，直接把它关了 -->
+<Configuration status="off">
+	<!-- 配置输出端  -->
 	<Appenders>
+		<!-- 输出到控制台  -->
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout
 				pattern="[%-5level]%d{HH:mm:ss.SSS} [%t] %logger{36} - %msg%n" />
 		</Console>
+		<!-- 输出到文件 -->
 		<RollingFile name="RollingFileInfo" fileName="D:/log/tax_info.log"
 			filePattern="D:/log/tax_info-%d{yyyy-MM-dd}-%i.log">
-			
-			<!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
-			<ThresholdFilter level="info" onMatch="ACCEPT"
-				onMismatch="DENY" />
+			<!--只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+			<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />
+			<!-- 输出的格式  -->
 			<PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n" />
 			<Policies>
 				<TimeBasedTriggeringPolicy  interval="1" />
