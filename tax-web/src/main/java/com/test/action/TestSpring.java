@@ -1,6 +1,7 @@
 package com.test.action;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -25,7 +26,7 @@ public class TestSpring {
 	}
 	
 	public static void main(String[] args) {
-		Logger logger = Logger.getLogger(TestSpring.class);
+		Logger logger = LogManager.getLogger(TestSpring.class);
 		logger.debug("这是debug");
 		logger.info("这是Info");
 		logger.error("这是error");

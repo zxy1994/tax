@@ -1,38 +1,24 @@
 package com.test.dao.impl;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.tax.core.dao.impl.BaseDaoImpl;
 import com.test.dao.TestDao;
 import com.test.pojo.Student;
 
-public class TestDaoImpl implements TestDao {
-	private SessionFactory sessionFactory;
+public class TestDaoImpl extends BaseDaoImpl<Student> implements TestDao {
 	
-	public TestDaoImpl (SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-
+	private Logger log = LogManager.getLogger(getClass());
+	
 	@Override
 	public void saveOne(Student s) {
-		Session session = null;
-		Transaction tx = null;
-		try {
-			session = sessionFactory.openSession();
-			tx = session.beginTransaction();
-			session.save(s);
-			tx.commit();
-			System.out.println("添加成功，请到数据库查看");
-		} catch (Exception e) {
-			e.printStackTrace();
-			tx.rollback();
-		} finally {
-			if(null != session) {
-				session.close();
-			}
-		}
+		this.save(s);
 	}
 	
+	public TestDaoImpl(){
+		log.info("实例化了TestDaoImpl");
+	}
 	
 }
