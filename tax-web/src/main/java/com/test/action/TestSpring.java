@@ -30,8 +30,6 @@ public class TestSpring {
 		logger.debug("这是debug");
 		logger.info("这是Info");
 		logger.error("这是error");
-		int i = 1/0;
-		
 	}
 
 }
