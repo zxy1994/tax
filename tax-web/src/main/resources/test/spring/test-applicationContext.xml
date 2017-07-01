@@ -7,6 +7,9 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	<context:component-scan base-package="com.test.service.impl"></context:component-scan>
-	<bean id="testDao" class="com.test.dao.impl.TestDaoImpl" 
-		p:sessionFactory-ref="sessionFactory"/>
+	
+	<bean id="studentDao" class="com.test.dao.impl.StudentDaoImpl" 
+				p:sessionFactory-ref="sessionFactory" />
+				
+				
 </beans>

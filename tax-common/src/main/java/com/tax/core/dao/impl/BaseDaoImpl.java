@@ -24,21 +24,18 @@ import com.tax.core.dao.BaseDao;
 public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 	
 	private Class<T> clazz;
-	private Logger log = LogManager.getLogger(getClass());
 	
-	// 按照类型自动注入SessionFactory
+	// 按照类型自动注入SessionFactory; 在实例化的时候,Spring按照形参的类型自动注入
 	@Autowired
 	public void setMySessionFactory(SessionFactory sessionFactory){
 		setSessionFactory(sessionFactory);
-		log.info("注入了SessionFactory");
 	}
+	
 	
 	public BaseDaoImpl() {
 		//this表示当前被实例化的对象；如UserDaoImpl
 		ParameterizedType pt = (ParameterizedType)this.getClass().getGenericSuperclass();//BaseDaoImpl<User> 
 		clazz = (Class<T>)pt.getActualTypeArguments()[0];
-		log.info("实例化了BaseDaoImpl");
-		
 	}
 	
 	/**
@@ -47,6 +44,7 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 	 */
 	public Session getCurrentSession(){
 		Session session = null;
+		this.currentSession();
 		try {
 			session = getSessionFactory().getCurrentSession();
 		} catch (HibernateException e) {
@@ -55,47 +53,25 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 		return session;
 	}
 	
-	/**
-	 * 新增
-	 * @param entity
-	 */
 	@Override
 	public void save(T entity) {
 		getHibernateTemplate().save(entity);
 	}
 	
-	/**
-	 * 更新
-	 * @param entity
-	 */
 	@Override
 	public void update(T entity) {
 		getHibernateTemplate().update(entity);
 	}
 	
-	/**
-	 * 根据id删除
-	 * @param id
-	 */
 	@Override
-	public void delete(Serializable id) {
+	public void deleteById(Serializable id) {
 		getHibernateTemplate().delete(findById(id));
 	}
 	
-	/**
-	 * 通过id查找
-	 * @param id
-	 * @return 实体
-	 */
 	@Override
 	public T findById(Serializable id) {
 		return getHibernateTemplate().get(clazz, id);
 	}
-
-	/**
-	 * 查找所有
-	 * @return List集合
-	 */
 	@Override
 	public List<T> findAll() {
 		Session session = getCurrentSession();

@@ -27,7 +27,7 @@ public interface BaseDao<T> {
 	 * 根据id删除
 	 * @param id
 	 */
-	public void delete(Serializable id);
+	public void deleteById(Serializable id);
 
 	
 	/**
