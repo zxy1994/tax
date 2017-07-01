@@ -12,5 +12,5 @@
 	<constant name="struts.ui.theme" value="simple" />
 	
 	<!-- 导入其他配置文件 -->
-	<include file="test/struts/*.xml"></include>
+	<include file="tax/struts/*.xml"></include>
 </struts>
