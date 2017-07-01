@@ -47,8 +47,7 @@
 		<!-- (3)设置映射文件位置 -->
 		<property name="mappingLocations">
 			<list>
-				<value>classpath:tax/hbm/*.hbm.xml</value>
-				<value>classpath:test/hbm/*.hbm.xml</value>
+				<value>classpath:tax/hbm/*/*.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
