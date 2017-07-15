@@ -5,6 +5,13 @@ import java.util.List;
 
 import com.tax.pojo.nsfw.User;
 
+/**
+ * UserService
+ * @author   ZENG.XIAO.YAN
+ * @date 	 2017年7月15日 下午5:01:26
+ * @version  v1.0
+ */
+
 public interface UserService {
 	
 	/**

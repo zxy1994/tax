@@ -10,6 +10,13 @@ import com.tax.dao.nsfw.UserDao;
 import com.tax.pojo.nsfw.User;
 import com.tax.service.UserService;
 
+/**
+ * UserServiceImpl
+ * @author   ZENG.XIAO.YAN
+ * @date 	 2017年7月15日 下午5:01:21
+ * @version  v1.0
+ */
+
 @Service("userService")
 public class UserServiceImpl implements UserService {
 	@Autowired
