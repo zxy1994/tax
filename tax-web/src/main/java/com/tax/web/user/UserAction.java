@@ -17,5 +17,9 @@ public class UserAction extends ActionSupport {
 	private static final long serialVersionUID = 4526496105243102063L;
 	@Autowired
 	private UserService userService;
+	
+	public String listUi(){
+		return "list";
+	}
 
 }
