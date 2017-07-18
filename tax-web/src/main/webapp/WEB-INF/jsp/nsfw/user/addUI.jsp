@@ -6,7 +6,7 @@
     
 </head>
 <body class="rightBody">
-<form id="form" name="form" action="" method="post" enctype="multipart/form-data">
+<form id="form" name="form" action="${basePath}nsfw/user_add.action" method="post" enctype="multipart/form-data">
     <div class="p_d_1">
         <div class="p_d_1_1">
             <div class="content_info">
@@ -15,7 +15,7 @@
     <table id="baseInfo" width="100%" align="center" class="list" border="0" cellpadding="0" cellspacing="0"  >
         <tr>
             <td class="tdBg" width="200px">所属部门：</td>
-            <td><s:select name="user.dept" list=""/></td>
+            <td><s:select name="user.dept" list="#{'部门A':'部门A','部门B':'部门B'}"/></td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">头像：</td>

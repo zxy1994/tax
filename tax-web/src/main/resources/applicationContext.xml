@@ -78,6 +78,5 @@
 	
 	
 	<!-- 导入其他资源文件 -->
-	<!-- <import resource="classpath:test/spring/*.xml"/> -->
-	<!-- <import resource="classpath:tax/spring/*.xml"/> -->
+	<import resource="classpath:tax/spring/*.xml"/>
 </beans>

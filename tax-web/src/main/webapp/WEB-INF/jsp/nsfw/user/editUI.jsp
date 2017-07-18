@@ -6,16 +6,17 @@
     
 </head>
 <body class="rightBody">
-<form id="form" name="form" action="" method="post" enctype="multipart/form-data">
+<form id="form" name="form" action="${basePath}nsfw/user_edit.action" method="post" enctype="multipart/form-data">
     <div class="p_d_1">
         <div class="p_d_1_1">
             <div class="content_info">
     <div class="c_crumbs"><div><b></b><strong>用户管理</strong>&nbsp;-&nbsp;编辑用户</div></div>
     <div class="tableH2">编辑用户</div>
+    <input type="hidden" name="user.id" value="${user.id}">
     <table id="baseInfo" width="100%" align="center" class="list" border="0" cellpadding="0" cellspacing="0"  >
         <tr>
             <td class="tdBg" width="200px">所属部门：</td>
-            <td><s:select name="user.dept" list=""/></td>
+            <td><s:select name="user.dept" list="#{'部门A':'部门A','部门B':'部门B' }"/></td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">头像：</td>
@@ -67,7 +68,6 @@
             <td><s:textarea name="user.memo" cols="75" rows="3"/></td>
         </tr>
     </table>
-    
     <div class="tc mt20">
         <input type="submit" class="btnB2" value="保存" />
         &nbsp;&nbsp;&nbsp;&nbsp;

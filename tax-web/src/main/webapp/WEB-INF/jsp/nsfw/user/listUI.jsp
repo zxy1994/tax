@@ -1,13 +1,9 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="s" uri="/struts-tags"%>
-<%
-    pageContext.setAttribute("basePath", request.getContextPath()+"/") ;
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>用户管理</title>
-    <script type="text/javascript" src="${basePath}js/jquery/jquery-1.10.2.min.js"></script>
-    <link href="${basePath}css/skin1.css" rel="stylesheet" type="text/css" />
+    <%@include file="/common/header.jsp"%>
     <script type="text/javascript">
       	//全选、全反选
 		function doSelectAll(){
@@ -16,6 +12,25 @@
 			//prop jquery 1.6+建议使用
 			$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));		
 		}
+      	
+		//新增
+       	function doAdd(){
+       		document.forms[0].action = "${basePath}nsfw/user_addUI.action";
+       		document.forms[0].submit();
+       	}
+		
+        //编辑
+       	function doEdit(id){
+       		document.forms[0].action = "${basePath}nsfw/user_editUI.action?user.id="+id;
+       		document.forms[0].submit();
+       	}
+        
+        //删除
+      	function doDelete(id){
+      		document.forms[0].action = "${basePath}nsfw/user_delete.action?user.id=" + id;
+      		document.forms[0].submit();
+      	}
+		
     </script>
 </head>
 <body class="rightBody">
@@ -50,19 +65,27 @@
                             <td align="center">电子邮箱</td>
                             <td width="100" align="center">操作</td>
                         </tr>
-                        
-                            <tr bgcolor="f8f8f8">
-                                <td align="center"><input type="checkbox" name="selectedRow" value=""/></td>
-                                <td align="center">xxx</td>
-                                <td align="center"></td>
-                                <td align="center"></td>
-                                <td align="center"></td>
-                                <td align="center"></td>
+                        <c:forEach var="user" items="${userList}" >
+                             <tr bgcolor="f8f8f8">
+                                <td align="center"><input type="checkbox" name="selectedRow" value="${user.id}"/></td>
+                                <td align="center">${user.name}</td>
+                                <td align="center">${user.account}</td>
+                                <td align="center">${user.dept}</td>
+                                <c:choose>
+                                	<c:when test="${user.gender}">
+                                		 <td align="center">男</td>
+                                	</c:when>
+                                	<c:otherwise>
+                                		<td align="center">女</td>
+                                	</c:otherwise>
+                                </c:choose>
+                                <td align="center">${user.email}</td>
                                 <td align="center">
-                                    <a href="javascript:doEdit(id)">编辑</a>
-                                    <a href="javascript:doDelete(id)">删除</a>
+                                    <a href="javascript:doEdit('${user.id}')">编辑</a>
+                                    <a href="javascript:doDelete('${user.id}')">删除</a>
                                 </td>
                             </tr>
+                        </c:forEach>
                         
                     </table>
                 </div>

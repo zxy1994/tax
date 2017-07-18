@@ -168,6 +168,7 @@
 					<!-- 端口号 -->
 					<port>8888</port>
 					<path>/</path>
+					<contextReloadable>true</contextReloadable>
 				</configuration>
 			</plugin>
   		</plugins>
