@@ -2,8 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>用户管理</title>
     <%@include file="/common/header.jsp"%>
+    <title>用户管理</title>
     <script type="text/javascript">
       	//全选、全反选
 		function doSelectAll(){
@@ -30,6 +30,12 @@
       		document.forms[0].action = "${basePath}nsfw/user_delete.action?user.id=" + id;
       		document.forms[0].submit();
       	}
+        
+        //批量删除
+        function doDeleteAll(){
+        	document.forms[0].action = "${basePath}nsfw/user_batchDelete.action";
+        	document.forms[0].submit();
+        }
 		
     </script>
 </head>

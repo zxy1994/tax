@@ -22,31 +22,61 @@ public class UserAction extends ActionSupport {
 	private UserService userService;
 	private List<User> userList;
 	private User user;
+	private String[] selectedRow;
 	
+	/** 跳转到列表页面 */
 	public String listUI() {
 		this.setUserList(userService.findAll());
 		return "listUI";
 	}
 
+	/** 跳转到添加页面 */
 	public String addUI() {
 		return "addUI";
 	}
 
+	/** 添加 */
 	public String add() {
-		userService.save(user);
+		if(user != null) {
+			userService.save(user);
+		}
 		return "list";
 	}
-
+	
+	/** 跳转到编辑页面 */
 	public String editUI() {
-		this.setUser(userService.findById(user.getId()));
+		if(null != user && null != user.getId()) {
+			this.setUser(userService.findById(user.getId()));
+		}
 		return "editUI";
 	}
 	
+	/** 编辑 */
 	public String edit() {
-		userService.update(user);
+		if(null != user && null != user.getId()) {
+			userService.update(user);
+		}
 		return "list";
 	}
-
+	
+	/** 删除 */
+	public String delete() {
+		if(null != user && null != user.getId()){
+			userService.deleteById(user.getId());
+		}
+		return "list";
+	}
+	
+	/** 批量删除 */
+	public String batchDelete() {
+		if(null != selectedRow ){
+			for (String id : selectedRow) {
+				userService.deleteById(id);
+			}
+		}
+		return "list";
+	}
+	
 	
 	/** setter and getter method */
 	public List<User> getUserList() {
@@ -64,8 +94,14 @@ public class UserAction extends ActionSupport {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
+
+	public String[] getSelectedRow() {
+		return selectedRow;
+	}
+
+	public void setSelectedRow(String[] selectedRow) {
+		this.selectedRow = selectedRow;
+	}
 	
 
 }
