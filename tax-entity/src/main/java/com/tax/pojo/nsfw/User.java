@@ -2,6 +2,7 @@ package com.tax.pojo.nsfw;
 
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class User implements Serializable {
@@ -111,6 +112,11 @@ public class User implements Serializable {
 	}
 	public void setState(String state) {
 		this.state = state;
+	}
+	
+	/** 为了在页面回显方便 */
+	public String getFormatBirthday() {
+		return new SimpleDateFormat("yyyy-MM-dd").format(birthday);
 	}
 	
 }

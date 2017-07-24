@@ -3,7 +3,7 @@
 <head>
     <%@include file="/common/header.jsp"%>
     <title>用户管理</title>
-    
+     <script type="text/javascript" src="${basePath}js/My97DatePicker/WdatePicker.js"></script>
 </head>
 <body class="rightBody">
 <form id="form" name="form" action="${basePath}nsfw/user_edit.action" method="post" enctype="multipart/form-data">
@@ -57,7 +57,18 @@
         </tr>        
         <tr>
             <td class="tdBg" width="200px">生日：</td>
-            <td><s:textfield id="birthday" name="user.birthday" /></td>
+            <td>
+				 <input type="text" id="birthday" name="user.birthday" 
+				 	value="${user.formatBirthday}"
+				  	class="Wdate" 
+		            onfocus="WdatePicker({
+		             	 lang:'zh-cn',
+						 skin:'default',
+						 dateFmt:'yyyy-MM-dd',
+						 readOnly:true
+						 })"
+				 />
+			</td>
         </tr>
 		<tr>
             <td class="tdBg" width="200px">状态：</td>

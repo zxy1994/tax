@@ -3,6 +3,7 @@
 <head>
     <%@include file="/common/header.jsp"%>
     <title>用户管理</title>
+    <script type="text/javascript" src="${basePath}js/My97DatePicker/WdatePicker.js"></script>
     
 </head>
 <body class="rightBody">
@@ -53,7 +54,14 @@
         </tr>
         <tr>
             <td class="tdBg" width="200px">生日：</td>
-            <td><s:textfield id="birthday" name="user.birthday" /></td>
+            <td><s:textfield id="birthday" name="user.birthday"
+             class="Wdate" 
+             onfocus="WdatePicker({
+             	 lang:'zh-cn',
+				 skin:'default',
+				 dateFmt:'yyyy-MM-dd',
+				 readOnly:true
+				 })" /></td>
         </tr>
 		<tr>
             <td class="tdBg" width="200px">状态：</td>
