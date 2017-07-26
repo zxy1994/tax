@@ -21,7 +21,7 @@
         <tr>
             <td class="tdBg" width="200px">头像：</td>
             <td>
-                <input type="file" name="headImg"/>
+                <input type="file" name="headImg" accept = "image/*"/>
             </td>
         </tr>
         <tr>

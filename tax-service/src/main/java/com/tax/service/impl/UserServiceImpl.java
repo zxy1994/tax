@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteById(Serializable id) {
+		User user = userDao.findById(id);
 		userDao.deleteById(id);
 	}
 

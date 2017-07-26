@@ -22,10 +22,8 @@
         <tr>
             <td class="tdBg" width="200px">头像：</td>
             <td>
-                
-                    <img src="" width="100" height="100"/>
-                
-                <input type="file" name="headImg"/>
+                    <img src="${basePath}nsfw/user_showHeadImg.action?user.id=${user.id}" width="100" height="100"/>
+                <input type="file" name="headImg" accept = "image/*"/>
             </td>
         </tr>
         <tr>
