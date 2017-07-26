@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <html>
 <head>
     <%@include file="/common/header.jsp"%>
@@ -59,15 +60,16 @@
             <td class="tdBg" width="200px">生日：</td>
             <td>
 				 <input type="text" id="birthday" name="user.birthday" 
-				 	value="${user.formatBirthday}"
+				 	value="<fmt:formatDate value='${user.birthday}' pattern='yyyy-MM-dd'/>"
 				  	class="Wdate" 
 		            onfocus="WdatePicker({
 		             	 lang:'zh-cn',
-						 skin:'default',
+						 skin:'whyGreen',
 						 dateFmt:'yyyy-MM-dd',
 						 readOnly:true
 						 })"
 				 />
+				 
 			</td>
         </tr>
 		<tr>

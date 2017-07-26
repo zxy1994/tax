@@ -114,10 +114,5 @@ public class User implements Serializable {
 		this.state = state;
 	}
 	
-	/** 为了在页面回显方便 */
-	public String getFormatBirthday() {
-		return new SimpleDateFormat("yyyy-MM-dd").format(birthday);
-	}
-	
 }
 
