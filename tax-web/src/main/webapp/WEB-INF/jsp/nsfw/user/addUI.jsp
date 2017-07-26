@@ -58,7 +58,7 @@
              class="Wdate" 
              onfocus="WdatePicker({
              	 lang:'zh-cn',
-				 skin:'default',
+				 skin:'whyGreen',
 				 dateFmt:'yyyy-MM-dd',
 				 readOnly:true
 				 })" /></td>
