@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.tax.core.util.ExcelUtils;
 import com.tax.pojo.nsfw.User;
 import com.tax.service.UserService;
 
@@ -172,6 +174,34 @@ public class UserAction extends ActionSupport {
 		//  这里没有返回视图，直接返回NONE
 		return NONE;
 	}
+	
+	/** 导出Excel */
+	public String exportExcel() {
+		String fileName = "用户数据";
+		String sheetName = "国税用户";
+		String title = "用户列表";
+		String[] cellTitles = new String[]{"用户名","账号","所属部门","性别","邮箱"};
+		List<User> userList = userService.findAll();
+		List<ArrayList<Object>> data = new ArrayList<>(userList.size());
+		for(User u : userList) {
+			ArrayList<Object> rowData = new ArrayList<>();
+			rowData.add(u.getName());
+			rowData.add(u.getAccount());
+			rowData.add(u.getDept());
+			rowData.add(u.isGender() ? "男":"女");
+			rowData.add(u.getEmail());
+			data.add(rowData);
+		}
+		// 调用写好的工具类输出Excel文件
+		HttpServletResponse response = ServletActionContext.getResponse();
+		try {
+			ExcelUtils.exportExcel(fileName, sheetName, title, cellTitles, data, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return NONE;
+	}
+	
 	
 	
 	/**

@@ -37,6 +37,10 @@
         	document.forms[0].submit();
         }
 		
+        // 批量导出
+        function doExportExcel(){
+        	window.location.href = "${basePath}nsfw/user_exportExcel.action";
+        }
     </script>
 </head>
 <body class="rightBody">
