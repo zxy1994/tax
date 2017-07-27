@@ -38,6 +38,8 @@ public class UserAction extends ActionSupport {
 	private File headImg;				// 这个名字和表单的name的值一样
 	private String headImgFileName;
 	private String headImgContentType;
+	
+	/** 存放图片的本地文件夹  */
 	private static final String USER_IMAGE_DIR = "D:/upload";
 	
 	/** 跳转到列表页面 */
@@ -109,16 +111,21 @@ public class UserAction extends ActionSupport {
 	
 	
 	/** 
-	 * 展示用户头像
+	 * 展示用户头像 Action方法
 	 * @return 将头像输出到页面
 	 * @see 访问方式：tax/nsfw/user_showHeadImg.action?user.id=xxxx
 	 */
 	public String showHeadImg() {
+		// 这个user的id是通过前台传过来的
 		if(null != user && user.getId() != null) {
-			// 查找出用户头像的地址
+			// 通过用户id去数据库查找出用户头像的地址
 			String img = userService.findById(user.getId()).getHeadImg();
 			if(StringUtils.isNotBlank(img)) {
+				// 拼接成本地地址，如：D:/upload/user/0dc14d2b81444ce1b5600a3fe43f9f30.jpg
+				// USER_IMAGE_DIR = D:/upload
+				// img 如：user/0dc14d2b81444ce1b5600a3fe43f9f30.jpg
 				File imgFile = new File(USER_IMAGE_DIR + "/" + img);
+				// 如果图片文件存在，就输出到页面
 				if(imgFile.exists()) {
 					/** 获取HttpServletResponse */
 					HttpServletResponse response = ServletActionContext.getResponse();
@@ -128,10 +135,12 @@ public class UserAction extends ActionSupport {
 					response.setDateHeader("expries", -1);
 					response.setHeader("Cache-Control", "no-cache");  
 			        response.setHeader("Prama", "no-cache");  
+			        // 以下为IO流操作
 					BufferedInputStream bis = null;
 					BufferedOutputStream bos = null;
 					try {
 						bis = new BufferedInputStream(new FileInputStream(imgFile));
+						// 这个Response.getOutputStream()是用于输出到浏览器的输出流
 						bos = new BufferedOutputStream(response.getOutputStream());
 						byte[] buffer = new byte[1024];
 						int len = 0;
@@ -141,6 +150,7 @@ public class UserAction extends ActionSupport {
 					} catch (Exception e) {
 						e.printStackTrace();
 					} finally {
+						// 关流
 						if (bis != null) {
 							try {
 								bis.close();
@@ -159,6 +169,7 @@ public class UserAction extends ActionSupport {
 				}
 			}
 		}
+		//  这里没有返回视图，直接返回NONE
 		return NONE;
 	}
 	
@@ -171,6 +182,7 @@ public class UserAction extends ActionSupport {
 		try {
 			if (null != headImg) {
 				// 获取存放文件夹路径
+				// USER_IMAGE_DIR = D:/upload
 				String prePath = USER_IMAGE_DIR.concat("/user");
 				if(!new File(prePath).exists()) {
 					new File(prePath).mkdirs();
@@ -206,12 +218,6 @@ public class UserAction extends ActionSupport {
 		}
 	}
 	
-
-	public static void main(String[] args) {
-		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-		
-		System.out.println(uuid);
-	}
 	
 	/** setter and getter method */
 	public List<User> getUserList() {
