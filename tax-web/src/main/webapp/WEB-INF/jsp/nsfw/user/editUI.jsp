@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <html>
 <head>
     <%@include file="/common/header.jsp"%>
@@ -22,8 +23,13 @@
         <tr>
             <td class="tdBg" width="200px">头像：</td>
             <td>
-            	<!-- 显示头像  -->
-                <img src="${basePath}nsfw/user_showHeadImg.action?user.id=${user.id}" width="100" height="100"/>
+            	<!-- 有头像就显示头像，并且把头像地址放隐藏域 -->
+            	<c:if test="${not empty user.headImg}">
+            		<!-- 显示头像  -->
+             		<img src="${basePath}nsfw/user_showHeadImg.action?user.id=${user.id}"
+             			 width="100" height="100"/>
+             		<input type="hidden" name="user.headImg" value="${user.headImg}" />
+            	</c:if>
                 <input type="file" name="headImg" accept = "image/*"/>
             </td>
         </tr>

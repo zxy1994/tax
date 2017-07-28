@@ -76,13 +76,13 @@ public class UserAction extends ActionSupport {
 	/** 编辑 */
 	public String edit() {
 		if (null != user && null != user.getId()) {
-			if (null == headImg) {
-				user.setHeadImg(userService.findById(user.getId()).getHeadImg());
-			} else {
-				// 删除原来的头像
-				this.deleteHeadImg(userService.findById(user.getId()).getHeadImg());
+			if (null != headImg) {
+				// 删除原来的头像(这个头像地址从通过隐藏域前台传过来，如果本来就没有头像则为null)
+				this.deleteHeadImg(user.getHeadImg());
 				// 上传新头像并更新数据库
 				user.setHeadImg(this.uploadFile());
+			} else {
+				
 			}
 			userService.update(user);
 		}
@@ -105,6 +105,8 @@ public class UserAction extends ActionSupport {
 	public String batchDelete() {
 		if(null != selectedRow ){
 			for (String id : selectedRow) {
+				// 把头像也删了 
+				this.deleteHeadImg(userService.findById(id).getHeadImg());
 				userService.deleteById(id);
 			}
 		}
@@ -240,7 +242,7 @@ public class UserAction extends ActionSupport {
 	
 	/**
 	 * 删除用户头像的方法
-	 * @param 头像url
+	 * @param  imgUrl 头像url
 	 */
 	private void deleteHeadImg(String imgUrl) {
 		try {
