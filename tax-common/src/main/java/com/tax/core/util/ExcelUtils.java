@@ -26,16 +26,18 @@ public class ExcelUtils {
 	
 	/**
 	 * 导出数据到Excel
-	 * @param fileName	     文件名,不包含后缀
-	 * @param sheetName   sheet名
-	 * @param title		     标题 
-	 * @param cellTitles  每一列的标题	
-	 * @param data		     数据
-	 * @param response	  HttpServletResponse对象
+	 * @param fileName	     		文件名,不包含后缀
+	 * @param sheetName   			sheet名
+	 * @param title		     		标题 
+	 * @param cellTitles  			每一列的标题	
+	 * @param autoSizeColumnNum    	需要自动调整列宽的列的编号(从0开始)的数组,该参数可以为null
+	 * @param data		   			数据: 一行数据封装成一个ArrayList,最后将所有ArrayList封装到一个List
+	 * @param response	  			HttpServletResponse对象
 	 * @throws Exception 
 	 */
-	public static void exportExcel(String fileName, String sheetName, String title, String cellTitles[],
-			List<ArrayList<Object>> data, HttpServletResponse response) throws Exception {
+	public static void exportExcel(String fileName, String sheetName, String title, String[] cellTitles,
+			int[] autoSizeColumnNum, List<ArrayList<Object>> data, HttpServletResponse response) throws Exception {
+		
 		/** 创建空的工作簿 */
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		/** 创建工作表 */
@@ -49,7 +51,7 @@ public class ExcelUtils {
 		// 设置单元格内容
 		cell01.setCellValue(title);
 		// 创建单元格样式
-		XSSFCellStyle cellStyle01 = createCellStyle(workbook,"Courier New",(short)16,true);
+		XSSFCellStyle cellStyle01 = createCellStyle(workbook,"Courier New",(short)18,true);
 		// 设置单元格样式
 		cell01.setCellStyle(cellStyle01);
 		
@@ -66,7 +68,7 @@ public class ExcelUtils {
 		
 		/** 中间行的处理  */
 		// 创建单元格样式
-		XSSFCellStyle cellStyle03 = createCellStyle(workbook,"宋体",(short)10,false);
+		XSSFCellStyle cellStyle03 = createCellStyle(workbook,null,(short)12,false);
 		// for循环处理
 		for (int i = 0; i < data.size(); i++) {
 			XSSFRow row = sheet.createRow(i + 2);
@@ -78,6 +80,11 @@ public class ExcelUtils {
 			}
 		}
 		
+		/** 设置自动调整列宽  */
+		// 某些情况下,有的列内容太长需要自动调整列宽
+		for (int i = 0; i < autoSizeColumnNum.length; i++) {
+			sheet.autoSizeColumn(autoSizeColumnNum[i]);
+		}
 		/** 下载时文件名为中文：乱码解决 */
 		// 响应的过程：
 		// 服务器： utf-8|gbk --> iso8859-1    浏览器: iso8859-1 --> utf-8|gbk (firefox、chrome)

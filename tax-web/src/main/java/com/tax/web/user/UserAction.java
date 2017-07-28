@@ -177,13 +177,16 @@ public class UserAction extends ActionSupport {
 	
 	/** 导出Excel */
 	public String exportExcel() {
+		long start = System.currentTimeMillis();
 		String fileName = "用户数据";
 		String sheetName = "国税用户";
 		String title = "用户列表";
-		String[] cellTitles = new String[]{"用户名","账号","所属部门","性别","邮箱"};
-		List<User> userList = userService.findAll();
-		List<ArrayList<Object>> data = new ArrayList<>(userList.size());
-		for(User u : userList) {
+		String[] cellTitles = new String[]{"用户名","账号","部门","性别","邮箱"};
+		// 从数据库查出数据
+		List<User> uList = userService.findAll();
+		// 封装数据
+		List<ArrayList<Object>> data = new ArrayList<>(uList.size());
+		for(User u : uList) {
 			ArrayList<Object> rowData = new ArrayList<>();
 			rowData.add(u.getName());
 			rowData.add(u.getAccount());
@@ -192,13 +195,18 @@ public class UserAction extends ActionSupport {
 			rowData.add(u.getEmail());
 			data.add(rowData);
 		}
+		// 设置需要自动调整列宽的列
+		int[] autoSizeCellNum = new int[]{4};	// 邮箱那一列宽度需要自动调整
+		
 		// 调用写好的工具类输出Excel文件
 		HttpServletResponse response = ServletActionContext.getResponse();
 		try {
-			ExcelUtils.exportExcel(fileName, sheetName, title, cellTitles, data, response);
+			ExcelUtils.exportExcel(fileName, sheetName, title, cellTitles,autoSizeCellNum, data, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		long end = System.currentTimeMillis();
+		System.out.println("导出 " + uList.size() + "条数据，耗时 " + (end - start) + "ms");
 		return NONE;
 	}
 	
