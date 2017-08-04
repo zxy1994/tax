@@ -1,5 +1,6 @@
 package com.tax.service;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -46,4 +47,11 @@ public interface UserService {
 	 * @return List集合
 	 */
 	public List<User> findAll();
+
+	/**
+	 * 使用Excel导入用户
+	 * @param userExcel
+	 * @param userExcelFileName
+	 */
+	public void importExcel(File userExcel, String userExcelFileName);
 }

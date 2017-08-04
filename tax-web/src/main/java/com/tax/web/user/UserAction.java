@@ -40,6 +40,9 @@ public class UserAction extends ActionSupport {
 	private File headImg;				// 这个名字和表单的name的值一样
 	private String headImgFileName;
 	private String headImgContentType;
+	private File userExcel;
+	private String userExcelFileName;
+	private String userExcelContentType;
 	
 	/** 存放图片的本地文件夹  */
 	private static final String USER_IMAGE_DIR = "D:/upload";
@@ -212,6 +215,13 @@ public class UserAction extends ActionSupport {
 		return NONE;
 	}
 	
+	public String importExcel() {
+		if(null != userExcelFileName && userExcelFileName.matches(".+\\.(?i)(xls|xlsx)")){
+			userService.importExcel(userExcel, userExcelFileName);
+		}
+		return "list";
+	}
+	
 	
 	
 	/**
@@ -306,6 +316,30 @@ public class UserAction extends ActionSupport {
 
 	public void setHeadImgContentType(String headImgContentType) {
 		this.headImgContentType = headImgContentType;
+	}
+
+	public File getUserExcel() {
+		return userExcel;
+	}
+
+	public void setUserExcel(File userExcel) {
+		this.userExcel = userExcel;
+	}
+
+	public String getUserExcelFileName() {
+		return userExcelFileName;
+	}
+
+	public void setUserExcelFileName(String userExcelFileName) {
+		this.userExcelFileName = userExcelFileName;
+	}
+
+	public String getUserExcelContentType() {
+		return userExcelContentType;
+	}
+
+	public void setUserExcelContentType(String userExcelContentType) {
+		this.userExcelContentType = userExcelContentType;
 	}
 	
 

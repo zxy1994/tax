@@ -1,12 +1,24 @@
 package com.tax.core.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -129,4 +141,65 @@ public class ExcelUtils {
 
 		return cellStyle;
 	}
+	
+	
+	/**
+	 * 解析Excel文件的方法
+	 * @param  excelFile	 Excel文件
+	 * @param  fileName	  文件名
+	 * @return List<ArrayList<String>>
+	 * @throws IOException
+	 */
+	public static List<ArrayList<String>> parseExcel(File excelFile,String fileName) throws IOException{
+		// 判断文件格式
+		boolean isExcel03 = fileName.matches(".+\\.(?i)(xls)");//这里的(?i)代表忽略大小写
+		FileInputStream fis = new FileInputStream(excelFile);
+		// 读取工作簿
+		Workbook wb = isExcel03 ? new HSSFWorkbook(fis) : new XSSFWorkbook(fis);
+		// 读取工作表
+		Sheet sheet = wb.getSheetAt(0);	
+		List<ArrayList<String>> resultData = new ArrayList<ArrayList<String>>();	//存放返回数据
+		// 开始每行的读取
+		for (int i = 0; i <= sheet.getLastRowNum(); i++) {
+			Row row = sheet.getRow(i);
+			Iterator<Cell> iterator = row.cellIterator();
+			ArrayList<String> rowData = new ArrayList<>();
+			// 迭代每一行的单元格
+			while(iterator.hasNext()){
+				Cell cell = iterator.next();
+				String cellValue = null;
+				switch (cell.getCellType()) {
+					case Cell.CELL_TYPE_BLANK:		// 空白
+						cellValue = null;
+						break;
+					case Cell.CELL_TYPE_STRING:		// 文本
+						cellValue = cell.getStringCellValue();
+						break;
+					case Cell.CELL_TYPE_NUMERIC:	// 数字或者日期
+						if(DateUtil.isCellDateFormatted(cell)){		// 是否是日期
+							Date date = cell.getDateCellValue();
+							cellValue = date == null ? null : date.toString();
+						} else {
+							//防止变成因为数字太长变成科学计数法
+							cell.setCellType(CellType.STRING);
+							cellValue = cell.getStringCellValue();
+						}
+						break;
+					case Cell.CELL_TYPE_BOOLEAN:	// 布尔型
+						cellValue = String.valueOf(cell.getBooleanCellValue());
+						break;
+					default:
+						cellValue = null;
+						break;
+				}
+				rowData.add(cellValue); // 每个单元格数据存入行数据集合
+			}
+			resultData.add(rowData);	// 每行数据存入返回数据集合
+		}
+		// 关流
+		wb.close();
+		fis.close();
+		return resultData;
+	}
+	
 }

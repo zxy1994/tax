@@ -41,6 +41,12 @@
         function doExportExcel(){
         	window.location.href = "${basePath}nsfw/user_exportExcel.action";
         }
+        
+        // 批量导入
+        function doImportExcel(){
+        	document.forms[0].action = "${basePath}nsfw/user_importExcel.action";
+        	document.forms[0].submit();
+        }
     </script>
 </head>
 <body class="rightBody">
@@ -58,7 +64,7 @@
                         <input type="button" value="新增" class="s_button" onclick="doAdd()"/>&nbsp;
                         <input type="button" value="删除" class="s_button" onclick="doDeleteAll()"/>&nbsp;
                         <input type="button" value="导出" class="s_button" onclick="doExportExcel()"/>&nbsp;
-                    	<input name="userExcel" type="file"/>
+                    	<input name="userExcel" type="file"  accept="application/vnd.ms-excel"/>
                         <input type="button" value="导入" class="s_button" onclick="doImportExcel()"/>&nbsp;
 
                     </li>
