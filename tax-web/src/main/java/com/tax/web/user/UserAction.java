@@ -215,6 +215,7 @@ public class UserAction extends ActionSupport {
 		return NONE;
 	}
 	
+	/** 导入Excel */
 	public String importExcel() {
 		if(null != userExcelFileName && userExcelFileName.matches(".+\\.(?i)(xls|xlsx)")){
 			userService.importExcel(userExcel, userExcelFileName);

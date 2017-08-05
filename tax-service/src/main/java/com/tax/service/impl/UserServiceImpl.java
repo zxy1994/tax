@@ -3,10 +3,12 @@ package com.tax.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,14 +68,16 @@ public class UserServiceImpl implements UserService {
 					user.setGender("男".equals(data.get(i).get(3))); //性别
 					user.setMobile(data.get(i).get(4));
 					user.setEmail(data.get(i).get(5));
-					user.setBirthday(new Date(data.get(i).get(6)));
+					if(StringUtils.isNotBlank(data.get(i).get(6))) {
+						user.setBirthday(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(data.get(i).get(6)));
+					}
 					user.setPassword("123456");
 					user.setState(User.USER_STATE_VALID);
 					this.save(user);
 				}
 			}
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("通过Excel导入用户数据方法出现了异常");
 		}
