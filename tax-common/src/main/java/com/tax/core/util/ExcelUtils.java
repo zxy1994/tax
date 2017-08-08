@@ -3,6 +3,7 @@ package com.tax.core.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -178,7 +179,7 @@ public class ExcelUtils {
 					case Cell.CELL_TYPE_NUMERIC:	// 数字或者日期
 						if(DateUtil.isCellDateFormatted(cell)){		// 是否是日期
 							Date date = cell.getDateCellValue();
-							cellValue = date == null ? null : date.toString();
+							cellValue = date == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
 						} else {
 							//防止变成因为数字太长变成科学计数法
 							cell.setCellType(CellType.STRING);
