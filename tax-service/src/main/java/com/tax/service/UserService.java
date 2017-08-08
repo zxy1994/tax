@@ -54,4 +54,12 @@ public interface UserService {
 	 * @param userExcelFileName
 	 */
 	public void importExcel(File userExcel, String userExcelFileName);
+
+	/**
+	 * 校验账号是否存在
+	 * @param account 账号
+	 * @param id	用户id，可以为null
+	 * @return
+	 */
+	public boolean verifyAccount(String account, String id);
 }

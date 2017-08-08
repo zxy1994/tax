@@ -215,12 +215,29 @@ public class UserAction extends ActionSupport {
 		return NONE;
 	}
 	
+	/** 批量导入用户  */
 	public String importExcel() {
 		if(null != userExcelFileName && userExcelFileName.matches(".+\\.(?i)(xls|xlsx)")){
 			userService.importExcel(userExcel, userExcelFileName);
 		}
 		return "list";
 	}
+	
+	/** 校验账号是否存在 */
+	public String verifyAccount(){
+		try {
+			if(null != user && StringUtils.isNoneBlank(user.getAccount())){
+				boolean result = userService.verifyAccount(user.getAccount(),user.getId());
+				HttpServletResponse response = ServletActionContext.getResponse();
+				response.setContentType("text/html");
+				response.getWriter().print(String.valueOf(result));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return NONE;
+	}
+	
 	
 	
 	

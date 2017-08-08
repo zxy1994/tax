@@ -64,7 +64,7 @@
                         <input type="button" value="新增" class="s_button" onclick="doAdd()"/>&nbsp;
                         <input type="button" value="删除" class="s_button" onclick="doDeleteAll()"/>&nbsp;
                         <input type="button" value="导出" class="s_button" onclick="doExportExcel()"/>&nbsp;
-                    	<input name="userExcel" type="file"  accept="application/vnd.ms-excel"/>
+                    	<input name="userExcel" type="file" />
                         <input type="button" value="导入" class="s_button" onclick="doImportExcel()"/>&nbsp;
 
                     </li>

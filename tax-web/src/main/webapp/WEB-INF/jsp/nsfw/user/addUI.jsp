@@ -4,6 +4,83 @@
     <%@include file="/common/header.jsp"%>
     <title>用户管理</title>
     <script type="text/javascript" src="${basePath}js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript">
+    		/** 验证账号是否存在 */
+    		function doVerifyAccount(){
+    			var account = $("#account").val().trim();
+    			if(account != ""){
+    				$.ajax({
+    					type: "POST",
+    					url: "${basePath}nsfw/user_verifyAccount.action",
+    					data: {"user.account":account},
+    					success:function(msg,status){
+    						if(status == "success"){
+    							if("true" == msg){
+    								alert("该账号已使用，请重新填写账号！");
+    								$("#account").focus();
+    							}
+    						}
+    					},
+    					error:function(){
+    						alert("网络异常，请刷新页面！");
+    					}
+    				});
+    			}
+    		}
+    		
+    		/** 表单提交 */
+    		function doSubmit(){
+    			// 校验用户名
+    			var userName = $("[name=\"user.name\"]").val().trim();
+    			if(userName == ""){
+    				alert("用户名不能为空！");
+    				$("[name=\"user.name\"]").val("");
+    				$("[name=\"user.name\"]").focus();
+    				return false;
+    			}
+    			// 校验账号
+    			var account = $("#account").val().trim();
+    			if(account == ""){
+    				alert("账号不能为空！");
+    				$("#account").val("");
+    				$("#account").focus();
+    				return false;
+    			}else{
+    				$.ajax({
+    					type: "POST",
+    					url: "${basePath}nsfw/user_verifyAccount.action",
+    					data: {"user.account":account},
+    					success:function(msg,status){
+    						if(status == "success"){
+    							if("true" == msg){
+    								alert("该账号已使用，请重新填写账号！");
+    								$("#account").focus();
+    							} else {
+    								// 账号合法后校验密码
+    				    			var password = $("[name=\"user.password\"]").val().trim();
+    				    			if(password == ""){
+    				    				alert("密码不能为空！");
+    				    				$("[name=\"user.password\"]").val("");
+    				    				$("[name=\"user.password\"]").focus();
+    				    				return false;
+    				    			}else if (!/^\w{6,20}$/.test(password)){
+    				    				alert("密码只能为6-20位的字母、数字、下划线组合！");
+    				    				$("[name=\"user.password\"]").focus();
+    				    				return false;
+    				    			}
+    				    			// 提交表单
+    				    			$("#form").submit();
+    							}
+    						}
+    					},
+    					error:function(){
+    						alert("网络异常，请刷新页面！");
+    					}
+    				});
+    			}
+    		}
+    		
+    </script>
     
 </head>
 <body class="rightBody">
@@ -30,7 +107,7 @@
         </tr>
         <tr>
             <td class="tdBg" width="200px">帐号：</td>
-            <td><s:textfield name="user.account"/></td>
+            <td><s:textfield name="user.account" id="account" onchange="doVerifyAccount()"/></td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">密码：</td>
@@ -73,7 +150,7 @@
         </tr>
     </table>
     <div class="tc mt20">
-        <input type="submit" class="btnB2" value="保存" />
+        <input  type="button" class="btnB2" value="保存" onclick="doSubmit()" />
         &nbsp;&nbsp;&nbsp;&nbsp;
         <input type="button"  onclick="javascript:history.go(-1)" class="btnB2" value="返回" />
     </div>
