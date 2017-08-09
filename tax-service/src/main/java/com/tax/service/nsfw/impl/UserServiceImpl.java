@@ -39,7 +39,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteById(Serializable id) {
-		User user = userDao.findById(id);
 		userDao.deleteById(id);
 	}
 
@@ -75,8 +74,7 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("通过Excel导入用户数据方法出现了异常");
+			throw new RuntimeException("通过Excel导入用户数据方法出现了异常",e);
 		}
 	}
 

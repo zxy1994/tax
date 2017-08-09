@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.opensymphony.xwork2.ActionSupport;
+import com.tax.core.action.BaseAction;
 import com.tax.core.util.ExcelUtils;
 import com.tax.pojo.nsfw.User;
 import com.tax.service.nsfw.UserService;
@@ -28,14 +28,14 @@ import com.tax.service.nsfw.UserService;
  * @version  v1.0
  */
 
-public class UserAction extends ActionSupport {
+public class UserAction extends BaseAction {
 
 	private static final long serialVersionUID = 4526496105243102063L;
 	@Autowired
 	private UserService userService;
 	private List<User> userList;
 	private User user;
-	private String[] selectedRow;
+	
 	/** 文件上传的3个属性 */
 	private File headImg;				// 这个名字和表单的name的值一样
 	private String headImgFileName;
@@ -217,8 +217,12 @@ public class UserAction extends ActionSupport {
 	
 	/** 批量导入用户  */ 
 	public String importExcel() {
-		if(null != userExcelFileName && userExcelFileName.matches(".+\\.(?i)(xls|xlsx)")){
-			userService.importExcel(userExcel, userExcelFileName);
+		try {
+			if(null != userExcelFileName && userExcelFileName.matches(".+\\.(?i)(xls|xlsx)")){
+				userService.importExcel(userExcel, userExcelFileName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return "list";
 	}
@@ -301,14 +305,6 @@ public class UserAction extends ActionSupport {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public String[] getSelectedRow() {
-		return selectedRow;
-	}
-
-	public void setSelectedRow(String[] selectedRow) {
-		this.selectedRow = selectedRow;
 	}
 
 	public File getHeadImg() {
