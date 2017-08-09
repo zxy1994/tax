@@ -1,4 +1,4 @@
-package com.tax.service.impl;
+package com.tax.service.nsfw.impl;
 
 import java.io.File;
 import java.io.Serializable;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.tax.core.util.ExcelUtils;
 import com.tax.dao.nsfw.UserDao;
 import com.tax.pojo.nsfw.User;
-import com.tax.service.UserService;
+import com.tax.service.nsfw.UserService;
 
 /**
  * UserServiceImpl

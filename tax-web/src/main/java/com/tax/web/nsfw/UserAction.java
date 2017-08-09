@@ -1,4 +1,4 @@
-package com.tax.web.user;
+package com.tax.web.nsfw;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.opensymphony.xwork2.ActionSupport;
 import com.tax.core.util.ExcelUtils;
 import com.tax.pojo.nsfw.User;
-import com.tax.service.UserService;
+import com.tax.service.nsfw.UserService;
 
 /**
  * UserAction
