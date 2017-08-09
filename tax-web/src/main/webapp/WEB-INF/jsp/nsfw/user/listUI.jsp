@@ -39,13 +39,20 @@
 		
         // 批量导出
         function doExportExcel(){
-        	window.location.href = "${basePath}nsfw/user_exportExcel.action";
+        	if(confirm("你确定要导出吗？")){
+        		window.location.href = "${basePath}nsfw/user_exportExcel.action";
+        	}
         }
         
         // 批量导入
         function doImportExcel(){
-        	document.forms[0].action = "${basePath}nsfw/user_importExcel.action";
-        	document.forms[0].submit();
+        	var file = $("[name=\"userExcel\"]").val();
+        	if(file == ""){
+        		alert("请选择文件需要导入的文件！")
+        	}else {
+        		document.forms[0].action = "${basePath}nsfw/user_importExcel.action";
+        		document.forms[0].submit();
+        	}
         }
     </script>
 </head>

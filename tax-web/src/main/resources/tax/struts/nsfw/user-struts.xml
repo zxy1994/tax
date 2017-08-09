@@ -5,7 +5,7 @@
 
 <struts>
 	<package name="user-action" namespace="/nsfw" extends="struts-default">
-		<action name="user_*" class="com.tax.web.user.UserAction" method="{1}">
+		<action name="user_*" class="com.tax.web.nsfw.UserAction" method="{1}">
 			<result name="{1}">/WEB-INF/jsp/nsfw/user/{1}.jsp</result>
 			<result name="list" type="redirectAction">
 				<param name="actionName">user_listUI</param>
