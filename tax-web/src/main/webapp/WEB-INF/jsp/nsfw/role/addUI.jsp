@@ -1,11 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <%@include file="/common/header.jsp"%>
     <title>角色管理</title>
 </head>
 <body class="rightBody">
-<form id="form" name="form" action="" method="post" enctype="multipart/form-data">
+<form id="form" name="form" action="${basePath}nsfw/role_add.action" method="post" enctype="multipart/form-data">
     <div class="p_d_1">
         <div class="p_d_1_1">
             <div class="content_info">
@@ -19,6 +20,13 @@
         <tr>
             <td class="tdBg" width="200px">角色权限：</td>
             <td>
+            	<c:forEach	items="${privilegeMap}" var="privilege">
+            		<label>
+            		<input style="margin-top: 5px;" type="checkbox" 
+            			name="privileges" value="${privilege.key}"/>
+            		${privilege.value}
+            		<label>
+            	</c:forEach>
             	
             </td>
         </tr>

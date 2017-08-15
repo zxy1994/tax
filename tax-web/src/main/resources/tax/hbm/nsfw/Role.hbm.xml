@@ -14,7 +14,8 @@
 		<property name="state" type="java.lang.String">
 			<column name="state" length="1" />
 		</property>
-		<set name="rolePrivileges" lazy="false" cascade="save-update,delete" inverse="true">
+		<!-- 延迟加载，且不维护外键 -->
+		<set name="rolePrivileges" lazy="true"  inverse="true">
 			<key>
 				<column name="role_id" not-null="true"/>
 			</key>

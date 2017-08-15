@@ -79,14 +79,13 @@ public class UserAction extends BaseAction {
 	/** 编辑 */
 	public String edit() {
 		if (null != user && null != user.getId()) {
+			// 判断有没上传新头像，如果上传了，就需要考虑删掉老的头像
 			if (null != headImg) {
 				// 删除原来的头像(这个头像地址从通过隐藏域前台传过来，如果本来就没有头像则为null)
 				this.deleteHeadImg(user.getHeadImg());
 				// 上传新头像并更新数据库
 				user.setHeadImg(this.uploadFile());
-			} else {
-				
-			}
+			} 
 			userService.update(user);
 		}
 		return "list";

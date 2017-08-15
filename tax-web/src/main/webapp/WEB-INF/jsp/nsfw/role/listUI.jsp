@@ -13,6 +13,31 @@
 		//prop jquery 1.6+建议使用
 		$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));		
 	}
+  	
+	//新增
+   	function doAdd(){
+   		document.forms[0].action = "${basePath}nsfw/role_addUI.action";
+   		document.forms[0].submit();
+   	}
+	
+    //编辑
+   	function doEdit(id){
+   		document.forms[0].action = "${basePath}nsfw/role_editUI.action?role.id="+id;
+   		document.forms[0].submit();
+   	}
+    
+    //删除
+  	function doDelete(id){
+  		document.forms[0].action = "${basePath}nsfw/role_delete.action?role.id=" + id;
+  		document.forms[0].submit();
+  	}
+    
+    //批量删除
+    function doDeleteAll(){
+    	document.forms[0].action = "${basePath}nsfw/role_batchDelete.action";
+    	document.forms[0].submit();
+    }
+  	
     </script>
 </head>
 <body class="rightBody">
