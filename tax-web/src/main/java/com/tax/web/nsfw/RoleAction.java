@@ -52,6 +52,7 @@ public class RoleAction extends BaseAction {
 	/** 跳转到编辑页面 */
 	public String editUI() {
 		if(null != role && null != role.getRoleId()) {
+			ActionContext.getContext().put("privilegeMap", Constant.PRIVILEGE_MAP);
 			this.setRole(roleService.findById(role.getRoleId()));
 		}
 		return "editUI";
@@ -59,8 +60,8 @@ public class RoleAction extends BaseAction {
 	
 	/** 编辑 */
 	public String edit() {
-		if (null != role && null != role.getRoleId()) {
-			roleService.update(role);
+		if (null != role && null != role.getRoleId()){
+			roleService.updateRoleAndRolePrivilege(role,privileges);
 		}
 		return "list";
 	}
@@ -68,7 +69,7 @@ public class RoleAction extends BaseAction {
 	/** 删除  */
 	public String delete() {
 		if(null != role && null != role.getRoleId()) {
-			roleService.deleteById(role.getRoleId());
+			roleService.deleteRoleAndRolePrivilege(role.getRoleId());
 		}
 		return "list";
 	}
@@ -78,8 +79,8 @@ public class RoleAction extends BaseAction {
 	/** 批量删除 */
 	public String batchDelete() {
 		if(null != selectedRow ){
-			for (String id : selectedRow) {
-				roleService.deleteById(id);
+			for (String roleId : selectedRow) {
+				roleService.deleteRoleAndRolePrivilege(roleId);;
 			}
 		}
 		return "list";

@@ -27,7 +27,6 @@
             		${privilege.value}
             		<label>
             	</c:forEach>
-            	
             </td>
         </tr>
         <tr>

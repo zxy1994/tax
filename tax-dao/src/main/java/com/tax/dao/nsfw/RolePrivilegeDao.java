@@ -11,5 +11,11 @@ import com.tax.pojo.nsfw.RolePrivilege;
  */
 public interface RolePrivilegeDao extends BaseDao<RolePrivilege> {
 
+	/**
+	 * 通过角色id删除相关的角色权限
+	 * @param roleId 角色id
+	 */
+	void deleteByRoleId(String roleId);
+
 
 }

@@ -45,7 +45,12 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public Role findById(Serializable id) {
-		return roleDao.findById(id);
+		Role role = roleDao.findById(id);
+		// service层的session未关闭，在此处把延迟加载的属性给加载出来
+		for (RolePrivilege rolePrivilege : role.getRolePrivileges()) {
+			rolePrivilege.getId();
+		}
+		return role;
 	}
 
 	@Override
@@ -58,7 +63,7 @@ public class RoleServiceImpl implements RoleService {
 				rolePrivilege.getId();
 			}
 		}
-		return null;
+		return list;
 	}
 	
 	/**
@@ -72,6 +77,35 @@ public class RoleServiceImpl implements RoleService {
 		for (String code : privileges) {
 			rolePrivilegeDao.save(new RolePrivilege(new RolePrivilegeId(roleId, code)));
 		}
+	}
+	
+	/**
+	 * 更新角色和角色权限
+	 * @param role 角色
+	 * @param privileges 角色权限code数组
+	 */
+	@Override
+	public void updateRoleAndRolePrivilege(Role role, String[] privileges) {
+		// 1.把老的角色权限删除
+		rolePrivilegeDao.deleteByRoleId(role.getRoleId());
+		// 2.更新角色
+		roleDao.update(role);
+		// 3.保存角色权限
+		for (String code : privileges) {
+			rolePrivilegeDao.save(new RolePrivilege(new RolePrivilegeId(role.getRoleId(), code)));
+		}
+	}
+	
+	/**
+	 * 删除角色和角色权限
+	 * @param roleId 角色id
+	 */
+	@Override
+	public void deleteRoleAndRolePrivilege(String roleId) {
+		// 1.把老的角色权限删除
+		rolePrivilegeDao.deleteByRoleId(roleId);
+		// 2.删除角色
+		roleDao.deleteById(roleId);
 	}
 
 	

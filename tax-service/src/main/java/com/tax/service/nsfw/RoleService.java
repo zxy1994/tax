@@ -2,8 +2,10 @@ package com.tax.service.nsfw;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import com.tax.pojo.nsfw.Role;
+import com.tax.pojo.nsfw.RolePrivilege;
 
 /**
  * RoleService
@@ -52,6 +54,20 @@ public interface RoleService {
 	 * @param privileges 权限code数组
 	 */
 	public void saveRoleAndRolePrivilege(Role role, String[] privileges);
+
+	/**
+	 * 更新角色和角色权限
+	 * @param role 角色
+	 * @param privileges 角色权限code数组
+	 */
+	public void updateRoleAndRolePrivilege(Role role, String[] privileges);
+
+	/**
+	 * 删除角色和角色权限
+	 * @param roleId 角色id
+	 */
+	public void deleteRoleAndRolePrivilege(String roleId);
+	
 
 	
 }

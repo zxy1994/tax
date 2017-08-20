@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <html>
 <head>
     <%@include file="/common/header.jsp"%>
@@ -11,6 +12,7 @@
             <div class="content_info">
     <div class="c_crumbs"><div><b></b><strong>角色管理</strong>&nbsp;-&nbsp;编辑角色</div></div>
     <div class="tableH2">编辑角色</div>
+    <!-- 把id放到隐藏域 -->
     <table id="baseInfo" width="100%" align="center" class="list" border="0" cellpadding="0" cellspacing="0"  >
         <tr>
             <td class="tdBg" width="200px">角色名称：</td>
@@ -19,7 +21,19 @@
         <tr>
             <td class="tdBg" width="200px">角色权限：</td>
             <td>
-            	
+            	<c:forEach	items="${privilegeMap}" var="privilege">
+            		<label>
+            		<input style="margin-top: 5px;" type="checkbox" 
+            			name="privileges" value="${privilege.key}"
+            			<c:forEach var="rolePrivilege" items="${role.rolePrivileges}">
+		            		<c:if test="${rolePrivilege.id.code==privilege.key}">
+		            			checked="checked""
+		            		</c:if>
+		            	</c:forEach>
+            			/>
+            		${privilege.value}
+            		<label>
+            	</c:forEach>
             </td>
         </tr>
         <tr>
