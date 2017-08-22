@@ -16,9 +16,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.tax.core.action.BaseAction;
 import com.tax.core.util.ExcelUtils;
+import com.tax.pojo.nsfw.Role;
 import com.tax.pojo.nsfw.User;
+import com.tax.service.nsfw.RoleService;
 import com.tax.service.nsfw.UserService;
 
 /**
@@ -33,8 +36,11 @@ public class UserAction extends BaseAction {
 	private static final long serialVersionUID = 4526496105243102063L;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RoleService roleService;
 	private List<User> userList;
 	private User user;
+	private String[] roleIds;
 	
 	/** 文件上传的3个属性 */
 	private File headImg;				// 这个名字和表单的name的值一样
@@ -55,6 +61,9 @@ public class UserAction extends BaseAction {
 
 	/** 跳转到添加页面 */
 	public String addUI() {
+		List<Role> roleList = roleService.findAll();
+		// 数据库查出所有角色
+		ActionContext.getContext().put("roleList", roleList);
 		return "addUI";
 	}
 
@@ -352,6 +361,14 @@ public class UserAction extends BaseAction {
 
 	public void setUserExcelContentType(String userExcelContentType) {
 		this.userExcelContentType = userExcelContentType;
+	}
+
+	public String[] getRoleIds() {
+		return roleIds;
+	}
+
+	public void setRoleIds(String[] roleIds) {
+		this.roleIds = roleIds;
 	}
 	
 

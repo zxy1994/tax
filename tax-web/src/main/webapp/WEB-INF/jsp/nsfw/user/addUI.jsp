@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <%@include file="/common/header.jsp"%>
@@ -119,7 +120,14 @@
         </tr>
         <tr>
             <td class="tdBg" width="200px">角色：</td>
-            <td></td>
+            <td>
+            	<c:forEach items="${roleList}" var="role">
+            		<label><input type="checkbox" name="roleIds" 
+            			value="${role.roleId}">
+            		${role.name}
+            		</label>
+            	</c:forEach>
+            </td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">电子邮箱：</td>
