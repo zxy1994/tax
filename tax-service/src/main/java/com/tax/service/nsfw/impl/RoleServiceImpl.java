@@ -74,9 +74,12 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public void saveRoleAndRolePrivilege(Role role, String[] privileges) {
 		String roleId = roleDao.saveRole(role);
-		for (String code : privileges) {
-			rolePrivilegeDao.save(new RolePrivilege(new RolePrivilegeId(roleId, code)));
+		if(null != privileges){
+			for (String code : privileges) {
+				rolePrivilegeDao.save(new RolePrivilege(new RolePrivilegeId(roleId, code)));
+			}
 		}
+		
 	}
 	
 	/**
@@ -91,8 +94,10 @@ public class RoleServiceImpl implements RoleService {
 		// 2.更新角色
 		roleDao.update(role);
 		// 3.保存角色权限
-		for (String code : privileges) {
-			rolePrivilegeDao.save(new RolePrivilege(new RolePrivilegeId(role.getRoleId(), code)));
+		if (null != privileges) {
+			for (String code : privileges) {
+				rolePrivilegeDao.save(new RolePrivilege(new RolePrivilegeId(role.getRoleId(), code)));
+			} 
 		}
 	}
 	

@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.tax.core.util.ExcelUtils;
 import com.tax.dao.nsfw.UserDao;
+import com.tax.dao.nsfw.UserRoleDao;
 import com.tax.pojo.nsfw.User;
+import com.tax.pojo.nsfw.UserRole;
+import com.tax.pojo.nsfw.UserRoleId;
 import com.tax.service.nsfw.UserService;
 
 /**
@@ -26,6 +29,8 @@ import com.tax.service.nsfw.UserService;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private UserRoleDao userRoleDao;
 
 	@Override
 	public void save(User user) {
@@ -83,6 +88,66 @@ public class UserServiceImpl implements UserService {
 		// 调用dao层查询数据库
 		List<User> list = userDao.findUserByAccountAndId(account,id);
 		return null != list && list.size() > 0;
+	}
+	
+	/**
+	 * 保存用户和用户角色
+	 * @param user
+	 * @param roleIds
+	 */
+	@Override
+	public void saveUserAndUserRole(User user, String[] roleIds) {
+		// 1.保存用户
+		String userId = userDao.saveUser(user);
+		// 2.保存用户角色
+		if(null != roleIds){
+			for (String roleId : roleIds) {
+				userRoleDao.save(new UserRole(new UserRoleId(userId, roleId)));
+			}
+		}
+	}
+	
+	/**
+	 * 通过用户id查询出对应的用户角色集合
+	 * @param id    用户id
+	 * @return		集合
+	 */
+	@Override
+	public List<UserRole> findAllUserRoleByUserId(String id) {
+		return userRoleDao.findAllUserRoleByUserId(id);
+	}
+	
+	/**
+	 * 更新用户和用户角色
+	 * @param user
+	 * @param roleIds
+	 */
+	@Override
+	public void updateUserAndUserRole(User user, String[] roleIds) {
+		// 1.删除老的用户角色
+		userRoleDao.deleteByUserId(user.getId());
+		// 2.更新用户
+		userDao.update(user);
+		// 3.保存用户角色
+		if(null != roleIds){
+			for (String roleId : roleIds) {
+				userRoleDao.save(new UserRole(new UserRoleId(user.getId(), roleId)));
+			}	
+		}
+		
+		
+	}
+	
+	/**
+	 * 通过用户id删除用户和用户角色
+	 * @param id 用户id
+	 */
+	@Override
+	public void deleteUserAndUserRole(String id) {
+		// 1.删除老的用户角色
+		userRoleDao.deleteByUserId(id);
+		// 2.删除用户
+		userDao.deleteById(id);
 	}
 
 	

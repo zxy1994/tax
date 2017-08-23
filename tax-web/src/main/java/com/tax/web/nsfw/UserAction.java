@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +22,7 @@ import com.tax.core.action.BaseAction;
 import com.tax.core.util.ExcelUtils;
 import com.tax.pojo.nsfw.Role;
 import com.tax.pojo.nsfw.User;
+import com.tax.pojo.nsfw.UserRole;
 import com.tax.service.nsfw.RoleService;
 import com.tax.service.nsfw.UserService;
 
@@ -40,6 +42,7 @@ public class UserAction extends BaseAction {
 	private RoleService roleService;
 	private List<User> userList;
 	private User user;
+	/** 页面传来的角色id数组 */
 	private String[] roleIds;
 	
 	/** 文件上传的3个属性 */
@@ -72,7 +75,7 @@ public class UserAction extends BaseAction {
 		if (user != null) {
 			String filePath = this.uploadFile();
 			user.setHeadImg(filePath);
-			userService.save(user);
+			userService.saveUserAndUserRole(user,roleIds);
 		}
 		return "list";
 	}
@@ -80,6 +83,19 @@ public class UserAction extends BaseAction {
 	/** 跳转到编辑页面 */
 	public String editUI() {
 		if(null != user && null != user.getId()) {
+			// 1.数据库查出所有角色,回显到页面
+			List<Role> roleList = roleService.findAll();
+			ActionContext.getContext().put("roleList", roleList);
+			// 2.从数据库查出当前用户的用户角色
+			List<UserRole> userRoleList = userService.findAllUserRoleByUserId(user.getId());
+			// 3.把查询出来的当前用户的角色id存放到数组中，用于回显到 页面上
+			int size = userRoleList.size();	// 把size先算出来，对后面for循环的效率有提高
+			// 由于roleIds 是Action的属性且有setter和getter方法，可以直接在页面取值
+			roleIds = new String[size];
+			for(int i = 0;i < size;i++ ){
+				roleIds[i] = userRoleList.get(i).getId().getRoleId();
+			}
+			// 4.查询出用户，回显到页面
 			this.setUser(userService.findById(user.getId()));
 		}
 		return "editUI";
@@ -95,7 +111,7 @@ public class UserAction extends BaseAction {
 				// 上传新头像并更新数据库
 				user.setHeadImg(this.uploadFile());
 			} 
-			userService.update(user);
+			userService.updateUserAndUserRole(user,roleIds);
 		}
 		return "list";
 	}
@@ -105,7 +121,7 @@ public class UserAction extends BaseAction {
 		if(null != user && null != user.getId()) {
 			// 把头像也删了 
 			this.deleteHeadImg(userService.findById(user.getId()).getHeadImg());
-			userService.deleteById(user.getId());
+			userService.deleteUserAndUserRole(user.getId());
 		}
 		return "list";
 	}
@@ -118,7 +134,7 @@ public class UserAction extends BaseAction {
 			for (String id : selectedRow) {
 				// 把头像也删了 
 				this.deleteHeadImg(userService.findById(id).getHeadImg());
-				userService.deleteById(id);
+				userService.deleteUserAndUserRole(id);
 			}
 		}
 		return "list";

@@ -15,6 +15,17 @@ public class UserRoleId implements Serializable {
 	private static final long serialVersionUID = 9177754655426495454L;
 	private String userId;
 	private String roleId;
+	
+	
+	public UserRoleId() {
+		super();
+	}
+
+	public UserRoleId(String userId, String roleId) {
+		super();
+		this.userId = userId;
+		this.roleId = roleId;
+	}
 
 	public String getUserId() {
 		return userId;

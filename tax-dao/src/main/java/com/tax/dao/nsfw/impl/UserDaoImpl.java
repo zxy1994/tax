@@ -1,5 +1,6 @@
 package com.tax.dao.nsfw.impl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -33,6 +34,11 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 		}
 		List<User> list = criteria.list();
 		return list;
+	}
+
+	@Override
+	public String saveUser(User user) {
+		return (String) this.getHibernateTemplate().save(user);
 	}
 	
 

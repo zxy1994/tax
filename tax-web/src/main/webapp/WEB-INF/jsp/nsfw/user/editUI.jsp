@@ -127,7 +127,20 @@
         </tr>
         <tr>
             <td class="tdBg" width="200px">角色：</td>
-            <td></td>
+            <td>
+            	<c:forEach items="${roleList}" var="role">
+            		<label><input type="checkbox" name="roleIds" 
+            			value="${role.roleId}"
+            			<c:forEach items="${roleIds}" var="roleId">
+            				<c:if test="${role.roleId==roleId}">
+		            			checked="checked""
+		            		</c:if>
+            			</c:forEach>
+            			/>
+            		${role.name}
+            		</label>
+            	</c:forEach>
+            </td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">电子邮箱：</td>

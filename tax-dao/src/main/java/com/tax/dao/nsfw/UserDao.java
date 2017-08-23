@@ -21,4 +21,11 @@ public interface UserDao extends BaseDao<User> {
 	 */
 	List<User> findUserByAccountAndId(String account, String id);
 
+	/**
+	 * 保存用户,返回用户id
+	 * @param user
+	 * @return 用户id
+	 */
+	String saveUser(User user);
+
 }

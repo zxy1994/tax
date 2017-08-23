@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.tax.pojo.nsfw.User;
+import com.tax.pojo.nsfw.UserRole;
 
 /**
  * UserService
@@ -62,4 +63,31 @@ public interface UserService {
 	 * @return
 	 */
 	public boolean verifyAccount(String account, String id);
+
+	/**
+	 * 保存用户和用户角色
+	 * @param user
+	 * @param roleIds
+	 */
+	public void saveUserAndUserRole(User user, String[] roleIds);
+
+	/**
+	 * 通过用户id查询出对应的用户角色集合
+	 * @param id    用户id
+	 * @return		集合
+	 */
+	public List<UserRole> findAllUserRoleByUserId(String id);
+
+	/**
+	 * 更新用户和用户角色
+	 * @param user
+	 * @param roleIds
+	 */
+	public void updateUserAndUserRole(User user, String[] roleIds);
+
+	/**
+	 * 通过用户id删除用户和用户角色
+	 * @param id 用户id
+	 */
+	public void deleteUserAndUserRole(String id);
 }

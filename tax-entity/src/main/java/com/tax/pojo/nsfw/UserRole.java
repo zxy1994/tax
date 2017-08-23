@@ -15,6 +15,15 @@ public class UserRole implements Serializable {
 	/** 主键用联合主键，这里抽成一个主键类 */
 	private UserRoleId id;
 	
+	public UserRole(UserRoleId id) {
+		super();
+		this.id = id;
+	}
+	
+	public UserRole() {
+		super();
+	}
+	
 	/** setter and getter method */
 	public UserRoleId getId() {
 		return id;
@@ -23,6 +32,8 @@ public class UserRole implements Serializable {
 	public void setId(UserRoleId id) {
 		this.id = id;
 	}
+
+	
 	
 	
 
