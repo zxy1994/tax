@@ -27,7 +27,22 @@
 				$('#tt').tree({
 					onClick: function(node){
 						//alert(node.text);  // 在用户点击的时候提示
-						console.log(self.parent.frames['treeTable'].innerHtml);
+						//self.location.reload;
+						var treeTable = self.parent.frames['treeTable'].document.getElementById("dg");
+						$(treeTable).datagrid({
+							  url:'${basePath}nsfw/tree_findTreeTableData.action?id=' + node.id,  
+							    toolbar:'#tb',			//工具栏
+							    rownumbers:true,		//显示行号
+							    fitColumns:true,		//自动调整列宽
+							    striped:true,			//斑马线效果
+							    fit : true,				//填充父容器
+							    columns:[[  
+							    	{field:'selectRow',checkbox:true,formatter:function(value,row){return row.id}},
+							        {field:'id',title:'ID',width:300},    
+							        {field:'title',title:'节点名称',width:300},    
+							        {field:'pId',title:'父节点ID',width:300}    
+							    ]]
+						});
 					}
 				});
 			});
