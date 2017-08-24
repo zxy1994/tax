@@ -50,6 +50,7 @@
 				<value>classpath:tax/hbm/*/*.hbm.xml</value>
 			</list>
 		</property>
+		<property name="packagesToScan" value="com.tax.pojo"/>
 	</bean>
 
 	<!--配置事务管理平台 transactionManager -->
