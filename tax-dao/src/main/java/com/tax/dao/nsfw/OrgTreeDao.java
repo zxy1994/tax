@@ -21,4 +21,16 @@ public interface OrgTreeDao extends BaseDao<OrgTree> {
 	 */
 	List<OrgTree> findListByPId(Integer pId);
 
+	/**
+	 * 保存节点树，如果名字存在则抛异常
+	 * @param orgTree
+	 */
+	void saveOrgTree(OrgTree orgTree);
+	
+	/**
+	 * 更新节点树，如果名字存在则抛异常
+	 * @param orgTree
+	 */
+	void updateOrgTree(OrgTree orgTree);
+
 }

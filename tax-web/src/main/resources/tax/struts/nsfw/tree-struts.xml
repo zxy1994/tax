@@ -9,6 +9,7 @@
 		<action name="tree_index" class="com.tax.web.nsfw.OrgTreeAction" >
 			<result name="success">/WEB-INF/jsp/nsfw/tree/treeIndex.jsp</result>
 		</action>
+		
 		<!-- 跳转到树页面 -->
 		<action name="tree_showTree" class="com.tax.web.nsfw.OrgTreeAction" method="showTree">
 			<result name="success">/WEB-INF/jsp/nsfw/tree/tree.jsp</result>
@@ -22,10 +23,10 @@
 			</result>
 		</action>
 		
+		<!-- 跳转到树表格页面 -->
 		<action name="tree_showTreeTable" class="com.tax.web.nsfw.OrgTreeAction" method="showTreeTable">
 			<result name="success">/WEB-INF/jsp/nsfw/tree/treeTable.jsp</result>
 		</action>
-		
 		<action name="tree_findTreeTableData" class="com.tax.web.nsfw.OrgTreeAction" method="findTreeTableData">
 			<result name="success" type="json">
 				<!--指定调用responseData属性的get方法来返回json数据  -->
@@ -34,6 +35,29 @@
 				<param name="enableGZIP">true</param>
 			</result>
 		</action>
+		
+		<!-- 跳转到添加树页面 -->
+		<action name="tree_showAddTree" class="com.tax.web.nsfw.OrgTreeAction" method="showAddTree">
+			<result name="success">/WEB-INF/jsp/nsfw/tree/addTree.jsp</result>
+		</action>
+		<action name="tree_addTree" class="com.tax.web.nsfw.OrgTreeAction" method="addTree">
+			<result name="success" type="json">
+				<param name="root">tip</param>
+				<param name="enableGZIP">true</param>
+			</result>
+		</action>
+		
+		<!-- 跳转到编辑树页面 -->
+		<action name="tree_showUpdateTree" class="com.tax.web.nsfw.OrgTreeAction" method="showUpdateTree">
+			<result name="success">/WEB-INF/jsp/nsfw/tree/updateTree.jsp</result>
+		</action>
+		<action name="tree_updateTree" class="com.tax.web.nsfw.OrgTreeAction" method="updateTree">
+			<result name="success" type="json">
+				<param name="root">tip</param>
+				<param name="enableGZIP">true</param>
+			</result>
+		</action>
+		
 	</package>
 
 </struts>

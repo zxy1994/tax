@@ -20,4 +20,23 @@ public interface OrgTreeService {
 	 */
 	List<OrgTree> findListByPId(Integer pId);
 
+	/**
+	 * 通过id查询
+	 * @param id
+	 * @return 实体
+	 */
+	OrgTree findById(Integer id);
+
+	/**
+	 * 保存实体
+	 * @param orgTree
+	 */
+	void save(OrgTree orgTree);
+
+	/**
+	 * 更新实体
+	 * @param orgTree
+	 */
+	void update(OrgTree orgTree);
+
 }

@@ -23,33 +23,45 @@
 				    url:'${basePath}nsfw/tree_findByPId.action',
 				    lines:true
 				});  
+				
 				// 点击事件
 				$('#tt').tree({
 					onClick: function(node){
-						//alert(node.text);  // 在用户点击的时候提示
-						//self.location.reload;
-						var treeTable = self.parent.frames['treeTable'].document.getElementById("dg");
-						$(treeTable).datagrid({
-							  url:'${basePath}nsfw/tree_findTreeTableData.action?id=' + node.id,  
-							    toolbar:'#tb',			//工具栏
-							    rownumbers:true,		//显示行号
-							    fitColumns:true,		//自动调整列宽
-							    striped:true,			//斑马线效果
-							    fit : true,				//填充父容器
-							    columns:[[  
-							    	{field:'selectRow',checkbox:true,formatter:function(value,row){return row.id}},
-							        {field:'id',title:'ID',width:300},    
-							        {field:'title',title:'节点名称',width:300},    
-							        {field:'pId',title:'父节点ID',width:300}    
-							    ]]
-						});
+						// self.parent.frames['treeTable']相当于treeTable页面的window,因此可以调用js方法
+						self.parent.frames['treeTable'].targetDataGrid(node.id);
 					}
 				});
-			});
-			 
+				
+				
+				
+			});//end of window onload
+			
+			// 用于获取选中节点信息的方法;该方法写成window的方法,可跨freamset调用
+			function getSelectedInfo(){
+				var node = $("#tt").tree("getSelected");
+				return node;
+			} 
+			
+			// 用于展开选中的节点，是window的方法，可跨freamset调用
+			function targetTreeReload(node){
+				// 如果node.target为undefined说明传的是id
+				if(node.target == undefined){
+					// 需要通过id找到节点（node此时是id）,然后重新赋值给node
+					node = $('#tt').tree('find', node);
+				}
+				var parentNode = $("#tt").tree("getParent",node.target); 
+				// node.target表示该节点的DOM对象
+				if(parentNode == null){
+					// 为null代表在根节点下添加
+					$("#tt").tree("reload",node.target);
+				}else{
+					$("#tt").tree("reload",parentNode.target);
+				}
+			}
 		</script>
 	</head>
 	<body>
+		<!-- 树容器 -->
 		<ul id="tt"></ul> 
 	</body>
 </html>

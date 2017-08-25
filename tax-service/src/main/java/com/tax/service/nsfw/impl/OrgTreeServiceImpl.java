@@ -30,4 +30,40 @@ public class OrgTreeServiceImpl implements OrgTreeService {
 		return orgTreeDao.findListByPId(pId);
 	}
 	
+	/**
+	 * 通过id查询
+	 * @param id
+	 * @return 实体
+	 */
+	@Override
+	public OrgTree findById(Integer id) {
+		return orgTreeDao.findById(id);
+	}
+	
+	/**
+	 * 保存实体
+	 * @param orgTree
+	 */
+	@Override
+	public void save(OrgTree orgTree) {
+		try {
+			orgTreeDao.saveOrgTree(orgTree);
+		} catch (Exception e) {
+			throw new RuntimeException("保存树的方法出现异常", e);
+		}
+	}
+	
+	/**
+	 * 更新实体
+	 * @param orgTree
+	 */
+	@Override
+	public void update(OrgTree orgTree) {
+		try {
+			orgTreeDao.updateOrgTree(orgTree);
+		} catch (Exception e) {
+			throw new RuntimeException("更新树的方法出现异常", e);
+		}
+	}
+	
 }

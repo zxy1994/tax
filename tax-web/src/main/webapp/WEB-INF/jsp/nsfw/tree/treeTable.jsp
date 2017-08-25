@@ -32,18 +32,98 @@
 				        {field:'title',title:'节点名称',width:300},    
 				        {field:'pId',title:'父节点ID',width:300}    
 				    ]]    
-				});   
-			});
-			 
+				});  
+				
+				//  给添加按钮绑定点击事件
+				$("#add").click(function(){
+					// self.parent.frames['tree']相当于获取到了tree.jsp的window,因此可以调用window的js方法
+					var node = self.parent.frames['tree'].getSelectedInfo();
+					if(node == null){
+						$.messager.alert('错误消息','请先在右侧选择父节点！','error');
+					}else{
+						var text = node.text;
+						var pid = node.id;
+						$.messager.confirm('确认消息', '确定要在<font color="red">【'+text+'】</font>下添加子节点吗？', function(r){
+							if (r){
+							    // 弹出添加页面
+								/*创建div  */
+								var divDialog = $("<div style='overflow:hidden;' />");
+								/*div转化成提示窗口  */
+								divDialog.dialog({    
+								    title: '添加节点',    
+								    width: 400,    
+								    height: 200,    
+								    closed: false,    
+								    cache: false, 
+								    content:'<iframe src="${basePath}nsfw/tree_showAddTree.action?id='+pid
+								    		+'" frameborder="0" width="100%" height="100%" align="top"/>',
+								    modal: true,
+								    onClose:function(){
+								    	// 关闭后，数据表格重载数据
+								    	$('#dg').datagrid("reload");
+								    	// 树节点重新数据重新加载
+								    	self.parent.frames['tree'].targetTreeReload(node);
+								    }
+								});    
+							}
+						});
+					}
+				}); // end of click
+				
+			//  给编辑按钮绑定点击事件
+			$("#edit").click(function(){
+				var rows = $("#dg").datagrid("getChecked");
+				if(rows == ""){
+					$.messager.alert('错误消息','请选择一行需要编辑的数据！','error');
+				}else if(rows.length > 1){
+					$.messager.alert('错误消息','编辑时只能选择一行！','error');
+				}else{
+					var row = rows[0];
+					// 弹出编辑页面
+					/*创建div  */
+					var divDialog = $("<div style='overflow:hidden;' />");
+					/*div转化成提示窗口  */
+					divDialog.dialog({    
+					    title: '编辑节点',    
+					    width: 400,    
+					    height: 170,    
+					    closed: false,    
+					    cache: false, 
+					    content:'<iframe src="${basePath}nsfw/tree_showUpdateTree.action?id='+row.id
+					    		+'" frameborder="0" width="100%" height="100%" align="top"/>',
+					    modal: true,
+					    onClose:function(){
+					    	// 关闭后，数据表格重载数据
+					    	$('#dg').datagrid("reload");
+					    	// 树节点重新数据重新加载
+					    	self.parent.frames['tree'].targetTreeReload(row.pId);
+					    }
+					});    
+				}
+			});//end of cilck
+				
+				
+				
+				
+				
+				
+			});// end of window onload
+			
+			// 触发数据表格重新加载数据的方法;必须写成window的方法，就可以跨frameset调用
+			function targetDataGrid(id){
+				$('#dg').datagrid("reload",{id:id});
+			}
+			
 		</script>
 	</head>
 	<body>
+		
 		<table id="dg"></table>  
 		<!-- 工具栏  -->
 		<div id="tb">
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添 加</a>
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">编 辑</a>
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">删 除</a>
+			<a href="#" id="add" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添 加</a>
+			<a href="#" id="edit" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">编 辑</a>
+			<a href="#" id="delete" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">删 除</a>
 		</div>
 		
 	</body>

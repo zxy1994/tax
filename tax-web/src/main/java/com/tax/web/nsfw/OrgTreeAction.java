@@ -24,10 +24,14 @@ public class OrgTreeAction extends ActionSupport implements Serializable {
 	private static final long serialVersionUID = 2478778799182312734L;
 	@Autowired
 	private OrgTreeService orgTreeService;
-	/** 接受树展开时传来的id */
+	/** orgTree */
+	private OrgTree orgTree;
+	/** 接受传来的id */
 	private Integer id;
 	/** responseData */
 	private List responseData;
+	/** tip */
+	private int tip;
 	
 	
 	/** 跳转到展示树页面 */
@@ -35,7 +39,7 @@ public class OrgTreeAction extends ActionSupport implements Serializable {
 		return SUCCESS;
 	}
 	
-	/** 通过父节点id查找子节点 */
+	/** 通过树父节点id查找子节点 */
 	public String findByPId() {
 		if(id == null){
 			id = 0;
@@ -44,7 +48,7 @@ public class OrgTreeAction extends ActionSupport implements Serializable {
 		List<OrgTree> list = orgTreeService.findListByPId(id);
 		// 封装数据
 		/** 上面的父id为0的话，只会显示根节点，因此我们处理下，显示根节点和一级子节点 */
-		if(id == 0){
+		/*if(id == 0){
 			OrgTree rootTree = list.get(0);
 			List<OrgTree> childList = orgTreeService.findListByPId(rootTree.getId());
 			responseData = new ArrayList();
@@ -54,17 +58,18 @@ public class OrgTreeAction extends ActionSupport implements Serializable {
 			map.put("state", "open");
 			map.put("children", childList);
 			responseData.add(map);
-		}else{
+		}else{*/
 			responseData = list;
-		}
+		/*}*/
 		return SUCCESS;
 	}
 	
-	
+	/** 跳转到树表格页面 */
 	public String showTreeTable() {
 		return SUCCESS;
 	}
 	
+	/** 查找树表格的数据 */
 	public String findTreeTableData() {
 		List<OrgTree> data; 
 		if(null == id){
@@ -76,7 +81,45 @@ public class OrgTreeAction extends ActionSupport implements Serializable {
 		return SUCCESS;
 	}
 	
+	/** 跳转到添加树的页面 */
+	public String showAddTree(){
+		orgTree = orgTreeService.findById(id);
+		return SUCCESS;
+	}
 	
+	/** 添加树 */
+	public String addTree() {
+		try {
+			if(null != orgTree){
+				orgTreeService.save(orgTree);
+				tip = 1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			tip = 0;
+		}
+		return SUCCESS;
+	}
+	
+	/** 跳转到编辑树的页面 */
+	public String showUpdateTree() {
+		orgTree = orgTreeService.findById(id);
+		return SUCCESS;
+	}
+	
+	/** 编辑树 */
+	public String updateTree() {
+		try {
+			if(null != orgTree){
+				orgTreeService.update(orgTree);
+				tip = 1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			tip = 0;
+		}
+		return SUCCESS;
+	}
 	
 	/** setter and getter method */
 	public Integer getId() {
@@ -95,7 +138,17 @@ public class OrgTreeAction extends ActionSupport implements Serializable {
 		this.responseData = responseData;
 	}
 
-	
-	
+	public OrgTree getOrgTree() {
+		return orgTree;
+	}
+
+	public void setOrgTree(OrgTree orgTree) {
+		this.orgTree = orgTree;
+	}
+
+	public int getTip() {
+		return tip;
+	}
+
 	
 }
