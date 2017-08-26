@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -28,6 +29,8 @@ public class OrgTreeAction extends ActionSupport implements Serializable {
 	private OrgTree orgTree;
 	/** 接受传来的id */
 	private Integer id;
+	/** 接受传来的ids */
+	private String ids;
 	/** responseData */
 	private List responseData;
 	/** tip */
@@ -48,7 +51,7 @@ public class OrgTreeAction extends ActionSupport implements Serializable {
 		List<OrgTree> list = orgTreeService.findListByPId(id);
 		// 封装数据
 		/** 上面的父id为0的话，只会显示根节点，因此我们处理下，显示根节点和一级子节点 */
-		/*if(id == 0){
+		if(id == 0){
 			OrgTree rootTree = list.get(0);
 			List<OrgTree> childList = orgTreeService.findListByPId(rootTree.getId());
 			responseData = new ArrayList();
@@ -58,9 +61,9 @@ public class OrgTreeAction extends ActionSupport implements Serializable {
 			map.put("state", "open");
 			map.put("children", childList);
 			responseData.add(map);
-		}else{*/
+		}else{
 			responseData = list;
-		/*}*/
+		}
 		return SUCCESS;
 	}
 	
@@ -121,6 +124,26 @@ public class OrgTreeAction extends ActionSupport implements Serializable {
 		return SUCCESS;
 	}
 	
+	public String deleteTree() {
+		try {
+			if(StringUtils.isNotBlank(ids)){
+				String[] idsArr = ids.split(",");
+				List<Integer> idList = new ArrayList<>();
+				for (String id : idsArr) {
+					idList.add(new Integer(id));
+				}
+				orgTreeService.delete(idList);
+				tip = 1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			tip = 0;
+		}
+		return SUCCESS;
+	}
+	
+	
+	
 	/** setter and getter method */
 	public Integer getId() {
 		return id;
@@ -150,5 +173,13 @@ public class OrgTreeAction extends ActionSupport implements Serializable {
 		return tip;
 	}
 
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+	
 	
 }

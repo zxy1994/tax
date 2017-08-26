@@ -2,6 +2,8 @@ package com.tax.dao.nsfw;
 
 import java.util.List;
 
+import org.hibernate.Session;
+
 import com.tax.core.dao.BaseDao;
 import com.tax.pojo.nsfw.OrgTree;
 
@@ -32,5 +34,19 @@ public interface OrgTreeDao extends BaseDao<OrgTree> {
 	 * @param orgTree
 	 */
 	void updateOrgTree(OrgTree orgTree);
+
+	/**
+	 * 批量删除
+	 * @param idList
+	 */
+	void batchDelete(List<Integer> idList);
+
+
+	/**
+	 * 统计子节点个数
+	 * @param pId
+	 * @return
+	 */
+	long findCountByPId(Integer pId);
 
 }

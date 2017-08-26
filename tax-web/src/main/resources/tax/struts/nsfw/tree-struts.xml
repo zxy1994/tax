@@ -58,6 +58,14 @@
 			</result>
 		</action>
 		
+		<!-- 删除树 -->
+		<action name="tree_deleteTree" class="com.tax.web.nsfw.OrgTreeAction" method="deleteTree">
+			<result name="success" type="json">
+				<param name="root">tip</param>
+				<param name="enableGZIP">true</param>
+			</result>
+		</action>
+		
 	</package>
 
 </struts>

@@ -39,4 +39,10 @@ public interface OrgTreeService {
 	 */
 	void update(OrgTree orgTree);
 
+	/**
+	 * 批量删除
+	 * @param idList
+	 */
+	void delete(List<Integer> idList);
+
 }

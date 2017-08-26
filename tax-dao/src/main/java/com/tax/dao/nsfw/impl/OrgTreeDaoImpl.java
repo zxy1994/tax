@@ -3,6 +3,7 @@ package com.tax.dao.nsfw.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -75,6 +76,34 @@ public class OrgTreeDaoImpl extends BaseDaoImpl<OrgTree> implements OrgTreeDao {
 		// 更新标题
 		OrgTree treeFromDb = session.get(OrgTree.class, orgTree.getId());
 		treeFromDb.setTitle(orgTree.getTitle());
+	}
+
+	/**
+	 * 批量删除
+	 * @param orgTree
+	 */
+	@Override
+	public void batchDelete(List<Integer> idList) {
+		Session session = this.getCurrentSession();
+		StringBuffer hql = new StringBuffer("DELETE OrgTree where id in (");
+		for (int i = 0; i < idList.size(); i++) {
+			hql.append( (i == 0) ? "?" :",?");
+		}
+		hql.append(")");
+		Query query = session.createQuery(hql.toString());
+		for (int i = 0; i < idList.size(); i++) {
+			query.setParameter(i, idList.get(i));
+		}
+		query.executeUpdate();
+	}
+
+
+	@Override
+	public long findCountByPId(Integer pId) {
+		Session session = this.getCurrentSession();
+		Query query = session.createQuery("select count(pId) from OrgTree where pId = ?");
+		query.setParameter(0, pId);
+		return (long) query.uniqueResult();
 	}
 
 

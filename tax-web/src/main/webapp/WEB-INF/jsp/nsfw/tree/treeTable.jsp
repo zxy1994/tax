@@ -70,42 +70,77 @@
 					}
 				}); // end of click
 				
-			//  给编辑按钮绑定点击事件
-			$("#edit").click(function(){
-				var rows = $("#dg").datagrid("getChecked");
-				if(rows == ""){
-					$.messager.alert('错误消息','请选择一行需要编辑的数据！','error');
-				}else if(rows.length > 1){
-					$.messager.alert('错误消息','编辑时只能选择一行！','error');
-				}else{
-					var row = rows[0];
-					// 弹出编辑页面
-					/*创建div  */
-					var divDialog = $("<div style='overflow:hidden;' />");
-					/*div转化成提示窗口  */
-					divDialog.dialog({    
-					    title: '编辑节点',    
-					    width: 400,    
-					    height: 170,    
-					    closed: false,    
-					    cache: false, 
-					    content:'<iframe src="${basePath}nsfw/tree_showUpdateTree.action?id='+row.id
-					    		+'" frameborder="0" width="100%" height="100%" align="top"/>',
-					    modal: true,
-					    onClose:function(){
-					    	// 关闭后，数据表格重载数据
-					    	$('#dg').datagrid("reload");
-					    	// 树节点重新数据重新加载
-					    	self.parent.frames['tree'].targetTreeReload(row.pId);
-					    }
-					});    
-				}
-			});//end of cilck
+				//  给编辑按钮绑定点击事件
+				$("#edit").click(function(){
+					var rows = $("#dg").datagrid("getChecked");
+					if(rows == ""){
+						$.messager.alert('错误消息','请选择一行需要编辑的数据！','error');
+					}else if(rows.length > 1){
+						$.messager.alert('错误消息','编辑时只能选择一行！','error');
+					}else{
+						var row = rows[0];
+						// 弹出编辑页面
+						/*创建div  */
+						var divDialog = $("<div style='overflow:hidden;' />");
+						/*div转化成提示窗口  */
+						divDialog.dialog({    
+						    title: '编辑节点',    
+						    width: 400,    
+						    height: 170,    
+						    closed: false,    
+						    cache: false, 
+						    content:'<iframe src="${basePath}nsfw/tree_showUpdateTree.action?id='+row.id
+						    		+'" frameborder="0" width="100%" height="100%" align="top"/>',
+						    modal: true,
+						    onClose:function(){
+						    	// 关闭后，数据表格重载数据
+						    	$('#dg').datagrid("reload");
+						    	// 树节点重新数据重新加载
+						    	self.parent.frames['tree'].targetTreeReload(row.pId);
+						    }
+						});    
+					}
+				});//end of cilck
 				
-				
-				
-				
-				
+				//  给编辑按钮绑定点击事件
+				$("#delete").click(function(){
+					var rows = $("#dg").datagrid("getChecked");
+					if(rows == ""){
+						$.messager.alert('错误消息','请选择至少选择一行需要删除的数据！','error');
+					}else{
+						
+						// 弹出确认按钮
+						$.messager.confirm('确认消息', '确定要删除所选子节点吗？', function(r){
+							if(r){
+								var arr = new Array();
+								$.each(rows,function(index,value){
+									arr.push(value.id);
+								})
+								$.ajax({
+									type:"POST",
+									url:"${basePath}nsfw/tree_deleteTree.action",
+									data:{ids:arr.join()},
+									success:function(tip,statusText){
+										if(statusText == "success"){
+											var msg = (tip == 1)?"删除成功":"删除失败";
+											alert(msg);
+											if(tip == 1){
+												// 成功后，数据表格重载数据
+										    	$('#dg').datagrid("reload");
+										    	// 树节点重新数据重新加载
+										    	self.parent.frames['tree'].targetTreeReload(rows[0].pId);
+											}
+										}
+									},
+									error:function(){
+										alert('网络异常,操作失败');
+									},
+									dataType:"json"
+								});
+							}
+						});
+					}
+				});//end of cilck
 				
 			});// end of window onload
 			
