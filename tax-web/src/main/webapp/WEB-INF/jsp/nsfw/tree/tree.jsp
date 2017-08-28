@@ -42,7 +42,7 @@
 				return node;
 			} 
 			
-			// 用于展开选中的节点，是window的方法，可跨freamset调用
+			// 用于刷新节点，是window的方法，可跨freamset调用
 			function targetTreeReload(node){
 				// 如果node.target为undefined说明传的是id
 				if(node.target == undefined){
@@ -52,7 +52,7 @@
 				var parentNode = $("#tt").tree("getParent",node.target); 
 				// node.target表示该节点的DOM对象
 				if(parentNode == null){
-					// 为null代表在根节点下添加
+					// 为null代表当前节点已经是根节点了
 					$("#tt").tree("reload",node.target);
 				}else{
 					$("#tt").tree("reload",parentNode.target);

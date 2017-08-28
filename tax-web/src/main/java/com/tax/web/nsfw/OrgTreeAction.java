@@ -51,19 +51,19 @@ public class OrgTreeAction extends ActionSupport implements Serializable {
 		List<OrgTree> list = orgTreeService.findListByPId(id);
 		// 封装数据
 		/** 上面的父id为0的话，只会显示根节点，因此我们处理下，显示根节点和一级子节点 */
-		if(id == 0){
-			OrgTree rootTree = list.get(0);
-			List<OrgTree> childList = orgTreeService.findListByPId(rootTree.getId());
-			responseData = new ArrayList();
-			HashMap<String,Object> map = new HashMap<>();
-			map.put("id", rootTree.getId());
-			map.put("text", rootTree.getText());
-			map.put("state", "open");
-			map.put("children", childList);
-			responseData.add(map);
-		}else{
+//		if(id == 0){
+//			OrgTree rootTree = list.get(0);
+//			List<OrgTree> childList = orgTreeService.findListByPId(rootTree.getId());
+//			responseData = new ArrayList();
+//			HashMap<String,Object> map = new HashMap<>();
+//			map.put("id", rootTree.getId());
+//			map.put("text", rootTree.getText());
+//			map.put("state", "open");
+//			map.put("children", childList);
+//			responseData.add(map);
+//		}else{
 			responseData = list;
-		}
+//		}
 		return SUCCESS;
 	}
 	
