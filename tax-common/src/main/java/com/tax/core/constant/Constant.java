@@ -16,7 +16,9 @@ public class Constant {
 	public static String PRIVILEGE_ZXXX = "zxxx"; 
 	public static String PRIVILEGE_NSFW = "nsfw"; 
 	public static String PRIVILEGE_SPACE = "spaces"; 
-
+	
+	/** 登陆成功后，用户存session的key */
+	public static final String USER = "login_user";
 	/** 权限集合 */
 	public static Map<String, String> PRIVILEGE_MAP;
 	static {

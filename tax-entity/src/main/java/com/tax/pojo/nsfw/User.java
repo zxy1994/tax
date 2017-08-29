@@ -2,6 +2,8 @@ package com.tax.pojo.nsfw;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
 public class User implements Serializable {
 
@@ -20,6 +22,8 @@ public class User implements Serializable {
 	private String memo;
 	private Date birthday;
 	private String state;
+	// 不映射到数据库
+	private List<UserRole> userRoleList;
 
 	// 用户状态
 	public final static String USER_STATE_VALID = "1";// 有效
@@ -140,4 +144,13 @@ public class User implements Serializable {
 		this.state = state;
 	}
 
+	public List<UserRole> getUserRoleList() {
+		return userRoleList;
+	}
+
+	public void setUserRoleList(List<UserRole> userRoleList) {
+		this.userRoleList = userRoleList;
+	}
+
+	
 }

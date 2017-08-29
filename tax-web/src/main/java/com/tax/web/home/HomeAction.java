@@ -13,4 +13,12 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class HomeAction extends ActionSupport implements Serializable {
 
+	/** serialVersionUID */
+	private static final long serialVersionUID = 8375502324411601544L;
+	
+	@Override
+	public String execute() {
+		return "home";
+	}
+
 }

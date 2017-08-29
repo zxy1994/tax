@@ -11,6 +11,11 @@
   	<param-value>classpath:applicationContext.xml</param-value>
   </context-param>
   
+  
+  <filter>
+  	<filter-name>loginFilter</filter-name>
+  	<filter-class>com.tax.web.filter.LoginFilter</filter-class>
+  </filter>
   <!-- struts2过滤器  -->
   <filter>
   	<filter-name>struts2-filter</filter-name>
@@ -18,10 +23,23 @@
   </filter>
   
   <filter-mapping>
+  	<filter-name>loginFilter</filter-name>
+  	<url-pattern>*.action</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
   	<filter-name>struts2-filter</filter-name>
   	<url-pattern>*.action</url-pattern>
   </filter-mapping>
   
+  <!-- 配置全局jsp属性 -->
+  <jsp-config>
+  	<!-- 属性组 -->
+  	<jsp-property-group>
+  		<url-pattern>*.jsp</url-pattern>
+  		<!-- 全局引入头文件 -->
+  		<include-prelude>/WEB-INF/jsp/base.jsp</include-prelude>
+  	</jsp-property-group>
+  </jsp-config>
   
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

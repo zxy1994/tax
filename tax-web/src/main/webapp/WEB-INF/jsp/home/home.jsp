@@ -70,7 +70,7 @@
                     <td align="center"></td>
                     <td align="left"></td>
                     <td align="right">
-                        <a><b></b><font color="red">欢迎您，xxx&nbsp;</font></a>
+                        <a><b></b><font color="red">欢迎您，${login_user.name}&nbsp;</font></a>
                     </td>
                     <td align="center"><img src="${ctx}/images/home/help.png" width="12" height="17"  /></td>
                     <td align="left"><a href="javascript:void(0);">帮助</a></td>
@@ -89,7 +89,7 @@
         <li><a href="javascript:void(0);">行政管理</a></li>
         <li><a href="javascript:void(0);">后勤服务</a></li>
         <li><a href="javascript:void(0);">在线学习</a></li>       
-        <li><a href="#">纳税服务</a> </li>
+        <li><a href="${ctx}/nsfw/home_frame.action">纳税服务</a> </li>
         <li><a href="javascript:void(0);">我的空间</a></li>
     </ul>
 </div>
@@ -107,16 +107,16 @@
                     <td width="76" height="100" align="center" valign="middle">
                         <div class="left-tx">
                             
-							<img src="${ctx}/images/home/gs09.png" width="70" height="70" />
+							<img src="${ctx}/nsfw/user_showHeadImg.action?user.id=${login_user.id}" width="70" height="70" />
                         </div>
                     </td>
                     <td width="5%"><img src="${ctx}/images/home/gs10.png" width="4" height="59" alt="" /></td>
                     <td width="60%"><table width="95%" border="0" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td colspan="2" style=" font-weight:bold; color:#3a7daa;">xx名</td>
+                            <td colspan="2" style=" font-weight:bold; color:#3a7daa;">${login_user.name}</td>
                         </tr>
                         <tr>
-                            <td colspan="2">所属部门：xx部门</td>
+                            <td colspan="2">所属部门：${login_user.dept}</td>
                         </tr>
                     </table>
                     </td>
@@ -187,7 +187,7 @@
     </div>
 </div>
 <!-- 尾部{ -->
-<div class="foot">版权所有©国税局 2014</div>
+<div class="foot">版权所有©国税局 2017</div>
 <!-- }尾部 -->
 </body>
 </html>

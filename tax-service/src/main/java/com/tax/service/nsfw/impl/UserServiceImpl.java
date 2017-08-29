@@ -149,6 +149,17 @@ public class UserServiceImpl implements UserService {
 		// 2.删除用户
 		userDao.deleteById(id);
 	}
-
+	
+	/**
+	 * 通过账号和密码查找用户
+	 * @param account
+	 * @param password
+	 * @return user实体
+	 */
+	@Override
+	public User findUserByAccountAndPassword(String account, String password) {
+		return userDao.findUserByAccountAndPassword(account, password);
+	}
+	
 	
 }

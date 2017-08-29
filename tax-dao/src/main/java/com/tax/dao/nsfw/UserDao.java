@@ -27,5 +27,13 @@ public interface UserDao extends BaseDao<User> {
 	 * @return 用户id
 	 */
 	String saveUser(User user);
+	
+	/**
+	 * 通过账号和密码查找用户
+	 * @param account
+	 * @param password
+	 * @return user实体
+	 */
+	User findUserByAccountAndPassword(String account, String password);
 
 }

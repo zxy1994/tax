@@ -5,7 +5,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 request.setAttribute("ctx", path);
 %>
-
+<%@include file="/common/header.jsp" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -15,6 +15,18 @@ request.setAttribute("ctx", path);
 <script type="text/javascript">
 
 function logins(){
+	var account = $("#account").val().trim();
+	if(account == ""){
+		alert("账号不能为空！");
+		$("#account").val("").focus();
+		return;
+	}
+	var password = $("#password").val().trim();
+	if(password == ""){
+		alert("密码不能为空！");
+		$("#password").val("").focus();
+		return;
+	}
 	document.forms[0].submit();
 }
 
@@ -82,7 +94,7 @@ html { overflow-y: hidden;  }
           </tr>
           <tr>
           	<td height="13">&nbsp;
-            	<span><div height=20 valign="middle" style="padding-left: 18px"><font color="red" id="errMsg"></font></div></span>
+            	<span><div height=20 valign="middle" style="padding-left: 18px"><font color="red" id="errMsg">${loginResult}</font></div></span>
             </td>
           </tr>
           <tr>
@@ -143,7 +155,7 @@ html { overflow-y: hidden;  }
 	  </div>   
        </div>
    </div>
-	<div class="foot">版权所有&nbsp;|&nbsp;国税局&nbsp;&nbsp;2014年</div>
+	<div class="foot">版权所有&nbsp;|&nbsp;国税局&nbsp;&nbsp;2017年</div>
 </div>
 </div>
 </s:form>
