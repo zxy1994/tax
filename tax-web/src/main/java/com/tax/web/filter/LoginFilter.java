@@ -12,8 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.tax.core.constant.Constant;
 import com.tax.pojo.nsfw.User;
+import com.tax.web.permission.PermissionCheck;
 
 /**
  * 登陆过滤器
@@ -40,10 +44,25 @@ public class LoginFilter implements Filter {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute(Constant.USER);
 		String uri = request.getRequestURI();
+		uri = uri.replaceAll(request.getContextPath(), "");
 		// 登陆模块的不拦截，否则登陆不了
 		if(uri.length() > 0 && !uri.contains("sys/login")) {
 			if (null != user) {
-				chain.doFilter(request, response);
+				// 判断权限
+				String moudle = this.subUri(uri);
+				if("sys".equals(moudle)){
+					chain.doFilter(request, response);
+				}
+				// 通过Spring工具类获取到spring容器
+				WebApplicationContext applicationContext = WebApplicationContextUtils
+						.getWebApplicationContext(session.getServletContext());
+				PermissionCheck permissionCheck = (PermissionCheck) applicationContext.getBean("permissionCheck");
+				// 有权限就放行，没权限就跳到没权限页面
+				if(permissionCheck.isAccesssible(user, moudle)) {
+					chain.doFilter(request, response);
+				} else {
+					response.sendRedirect(request.getContextPath()+"/sys/login_toNoPermissionUI.action");
+				}
 			} else {
 				response.sendRedirect(request.getContextPath()+"/sys/login_toLoginUI.action");
 			}
@@ -56,5 +75,17 @@ public class LoginFilter implements Filter {
 	@Override
 	public void destroy() {
 	}
-
+	
+	
+	/**
+	 * 对uri截取的方法
+	 * @param uri
+	 * @return
+	 */
+	private String subUri(String uri) {
+		int first = uri.indexOf("/");
+		int second = uri.indexOf("/",first + 1);
+		// first为-1时返回空串
+		return (first == -1) ? "" : uri.substring(first + 1, (second == -1) ? uri.length() : second);
+	}
 }
