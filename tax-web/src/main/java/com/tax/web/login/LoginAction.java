@@ -54,7 +54,14 @@ public class LoginAction extends ActionSupport implements Serializable {
 		loginResult = "登陆失败，用户名或密码错误！";
 		return "loginUI";
 	}
-
+	
+	/** 退出方法 */
+	public String logout() {
+		HttpSession session = ServletActionContext.getRequest().getSession();
+		// 清空session;
+		session.invalidate();
+		return "logout";
+	}
 	
 	/** setter and getter method */
 	public User getUser() {

@@ -34,6 +34,12 @@ function setClean(){
 	document.getElementById("account").value = "";
 	document.getElementById("password").value = "";
 }
+if("${login_user}" != ""){
+	window.location.href = "${ctx}/sys/home.action";
+}
+if(window != top){
+	top.location.href = window.location.href;
+}
 
 </script>
 <style type="text/css">

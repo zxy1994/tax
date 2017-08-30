@@ -23,7 +23,6 @@ import com.tax.service.nsfw.UserService;
  * @version v1.0
  */
 
-@Scope("prototype")
 @Component("permissionCheck")
 public class PermissionCheck implements Serializable {
 
@@ -36,7 +35,7 @@ public class PermissionCheck implements Serializable {
 
 	public PermissionCheck() {
 		Logger logger = LogManager.getLogger();
-		logger.info("---********^^^^^^^^^^^^^^^^^^^^^^^^^^^spring实例化了----------------" + this.getClass());
+		logger.error("---********^^^^^^^^^^^^^^^^^^^^^^^^^^^spring实例化了----------------" + this.getClass());
 	}
 	
 	/**

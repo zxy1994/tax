@@ -52,6 +52,7 @@ public class LoginFilter implements Filter {
 				String moudle = this.subUri(uri);
 				if("sys".equals(moudle)){
 					chain.doFilter(request, response);
+					return;
 				}
 				// 通过Spring工具类获取到spring容器
 				WebApplicationContext applicationContext = WebApplicationContextUtils

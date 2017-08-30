@@ -10,7 +10,17 @@
     <title>国税协同办公平台</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="${ctx}/css/home.css" rel="stylesheet" type="text/css" />
-
+	<script type="text/javascript" src="${ctx}/js/jquery/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#logoutId").click(function(e){
+				e.preventDefault();//取消事件默认行为，a标签默认会跳转
+				if(window.confirm('确定要退出吗？')){
+					window.location.href = $("#logoutId")[0].href;
+				}
+			});
+		})
+	</script>
 </head>
 
 <body>
@@ -75,7 +85,7 @@
                     <td align="center"><img src="${ctx}/images/home/help.png" width="12" height="17"  /></td>
                     <td align="left"><a href="javascript:void(0);">帮助</a></td>
                     <td align="center"><img src="${ctx}/images/home/exit.png" width="14" height="14"   /></td>
-                    <td align="left" valign="middle" ><a href="#">退出</a></td>
+                    <td align="left" valign="middle" ><a id="logoutId" href="${ctx}/sys/login_logout.action">退出</a></td>
                 </tr>
             </table>
         </td>

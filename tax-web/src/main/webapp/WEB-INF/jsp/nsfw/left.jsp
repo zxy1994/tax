@@ -75,37 +75,37 @@
             <div class="x_top" style="width:214px;"></div>
             <div class="sm">
 				<dl class="">
-                    <dt><a class="yh" href="${ctx}/nsfw/role_listUI.action" target="mainFrame"><b></b>角色管理<s class="down"></s>
+                    <dt><a class="yh" href="${ctx}nsfw/role_listUI.action" target="mainFrame"><b></b>角色管理<s class="down"></s>
                     </a></dt>
                 </dl>
                 <dl class="">
-                    <dt><a class="yh" href="${ctx}/nsfw/user_listUI.action" target="mainFrame"><b></b>用户管理<s class="down"></s>
+                    <dt><a class="yh" href="${ctx}nsfw/user_listUI.action" target="mainFrame"><b></b>用户管理<s class="down"></s>
                     </a></dt>
                 </dl>
 
                 <dl>
-                    <dt><a class="xxfb" href="#" target="mainFrame"><b></b>信息发布管理<s
+                    <dt><a class="xxfb" href="javascript:void(0);" target="mainFrame"><b></b>信息发布管理<s
                             class="down"></s> </a></dt>
                 </dl>
                 <dl class="">
-                    <dt><a class="tssl" href="#" target="mainFrame"><b></b>投诉受理管理<s
+                    <dt><a class="tssl" href="javascript:void(0);" target="mainFrame"><b></b>投诉受理管理<s
                             class="down"></s> </a></dt>
                 </dl>
                 <dl class="">
-                    <dt><a class="nszx" href="#" target="mainFrame"><b></b>纳税咨询管理<s class="down"></s> </a></dt>
+                    <dt><a class="nszx" href="javascript:void(0);" target="mainFrame"><b></b>纳税咨询管理<s class="down"></s> </a></dt>
                 </dl>
 
                 <dl class="">
-                    <dt><a class="fwdc" href="#" target="mainFrame"><b></b>服务调查管理<s class="down"></s> </a></dt>
+                    <dt><a class="fwdc" href="javascript:void(0);" target="mainFrame"><b></b>服务调查管理<s class="down"></s> </a></dt>
                 </dl>
                 <dl class="">
-                    <dt><a class="ygz" href="#" target="mainFrame"><b></b>易告知管理<s class="down"></s> </a></dt>
+                    <dt><a class="ygz" href="javascript:void(0);" target="mainFrame"><b></b>易告知管理<s class="down"></s> </a></dt>
                 </dl>
                 <dl class="">
                     <dt><a class="fwyy" style="cursor: pointer;"><b></b>服务预约管理<s class="down"></s> </a></dt>
                     <dd id="fwyygl" style="display:none;">
-                        <a class="" href="#" target="mainFrame"><b></b>预约服务</a>
-                        <a class="" href="#" target="mainFrame"><b></b>预约事项</a>
+                        <a class="" href="javascript:void(0);" target="mainFrame"><b></b>预约服务</a>
+                        <a class="" href="javascript:void(0);" target="mainFrame"><b></b>预约事项</a>
                     </dd>
                 </dl>
             </div>
