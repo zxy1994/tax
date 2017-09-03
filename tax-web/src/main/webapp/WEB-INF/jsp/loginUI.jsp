@@ -34,9 +34,11 @@ function setClean(){
 	document.getElementById("account").value = "";
 	document.getElementById("password").value = "";
 }
+/* 登录后就不能访问登录页面 */
 if("${login_user}" != ""){
 	window.location.href = "${ctx}/sys/home.action";
 }
+/* 防止页面内嵌到其他页面上 */
 if(window != top){
 	top.location.href = window.location.href;
 }
