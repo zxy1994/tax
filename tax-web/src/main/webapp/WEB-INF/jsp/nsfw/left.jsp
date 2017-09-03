@@ -1,7 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%
-    String path = request.getContextPath()+"/";
-    String basePath = path;
+    String path = request.getContextPath();
+    String basePath = path + "/";
     request.setAttribute("ctx", path);
 %>
 
