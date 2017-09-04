@@ -44,6 +44,7 @@
             <td class="tdBg" width="200px">创建时间：</td>
             <td>
             	<fmt:formatDate value="${nowDate}" pattern="yyyy-MM-dd HH:ss"/>
+            	<!-- 这个隐藏域的时间也要格式化，不然后台接收参数报错 -->
             	<input type="hidden" name="info.createTime" 
             	value="<fmt:formatDate value='${nowDate}' pattern='yyyy-MM-dd HH:ss'/>">
             </td>
