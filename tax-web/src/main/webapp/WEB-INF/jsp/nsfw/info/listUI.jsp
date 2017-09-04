@@ -4,7 +4,39 @@
     <%@include file="/common/header.jsp"%>
     <title>信息发布管理</title>
     <script type="text/javascript">
-        
+	  	//全选、全反选
+		function doSelectAll(){
+			// jquery 1.6 前
+			//$("input[name=selectedRow]").attr("checked", $("#selAll").is(":checked"));
+			//prop jquery 1.6+建议使用
+			$("input[name=selectedRow]").prop("checked", $("#selAll").is(":checked"));		
+		}
+	  	
+		//新增
+	   	function doAdd(){
+	   		document.forms[0].action = "${basePath}nsfw/info_addUI.action";
+	   		document.forms[0].submit();
+	   	}
+		
+	    //编辑
+	   	function doEdit(id){
+	   		document.forms[0].action = "${basePath}nsfw/info_editUI.action?info.infoId="+id;
+	   		document.forms[0].submit();
+	   	}
+	    
+	    //删除
+	  	function doDelete(id){
+	  		document.forms[0].action = "${basePath}nsfw/info_delete.action?info.infoId=" + id;
+	  		document.forms[0].submit();
+	  	}
+	    
+	    //批量删除
+	    function doDeleteAll(){
+	    	if(window.confirm("确定要删除吗？")){
+	    		document.forms[0].action = "${basePath}nsfw/info_batchDelete.action";
+		    	document.forms[0].submit();
+	    	}
+	    }
     </script>
 </head>
 <body class="rightBody">

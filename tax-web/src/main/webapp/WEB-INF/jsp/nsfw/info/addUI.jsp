@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
     <%@include file="/common/header.jsp"%>
@@ -37,11 +38,14 @@
         <tr>
             <td class="tdBg" width="200px">创建人：</td>
             <td>
-            
+            	${login_user.name}
+            	<input type="hidden" name="info.creator" value="${login_user.name}">
             </td>
             <td class="tdBg" width="200px">创建时间：</td>
             <td>
-             
+            	<fmt:formatDate value="${nowDate}" pattern="yyyy-MM-dd HH:ss"/>
+            	<input type="hidden" name="info.createTime" 
+            	value="<fmt:formatDate value='${nowDate}' pattern='yyyy-MM-dd HH:ss'/>">
             </td>
         </tr>
     </table>

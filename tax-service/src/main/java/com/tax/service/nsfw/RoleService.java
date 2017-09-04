@@ -2,10 +2,8 @@ package com.tax.service.nsfw;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 import com.tax.pojo.nsfw.Role;
-import com.tax.pojo.nsfw.RolePrivilege;
 
 /**
  * RoleService

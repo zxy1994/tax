@@ -35,8 +35,10 @@
     
     //批量删除
     function doDeleteAll(){
-    	document.forms[0].action = "${basePath}nsfw/role_batchDelete.action";
-    	document.forms[0].submit();
+    	if(window.confirm("确定要删除吗？")){
+    		document.forms[0].action = "${basePath}nsfw/role_batchDelete.action";
+        	document.forms[0].submit();
+    	}
     }
   	
     </script>
