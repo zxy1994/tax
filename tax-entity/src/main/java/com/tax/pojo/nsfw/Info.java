@@ -1,6 +1,6 @@
 package com.tax.pojo.nsfw;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +21,7 @@ public class Info implements java.io.Serializable {
 	private String content;
 	private String memo;
 	private String creator;
-	private Date createTime;
+	private Timestamp createTime;
 	private String state;
 	
 	public static String INFO_STATE_PUBLIC = "1";//发布
@@ -45,7 +45,7 @@ public class Info implements java.io.Serializable {
 		this.title = title;
 	}
 
-	public Info(String type, String source, String title, String content, String memo, String creator, Date createTime, String state) {
+	public Info(String type, String source, String title, String content, String memo, String creator, Timestamp createTime, String state) {
 		this.type = type;
 		this.source = source;
 		this.title = title;
@@ -121,11 +121,11 @@ public class Info implements java.io.Serializable {
 		this.state = state;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 	

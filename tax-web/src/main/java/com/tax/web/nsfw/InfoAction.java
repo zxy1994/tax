@@ -1,5 +1,6 @@
 package com.tax.web.nsfw;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.tax.core.action.BaseAction;
-import com.tax.core.constant.Constant;
 import com.tax.pojo.nsfw.Info;
 import com.tax.service.nsfw.InfoService;
 
@@ -36,23 +36,23 @@ public class InfoAction extends BaseAction {
 	/** 跳转到添加页面 */
 	public String addUI() {
 		ActionContext.getContext().put("infoTypeMap", Info.INFO_TYPE_MAP);
-		ActionContext.getContext().put("nowDate", new Date());
+		info = new Info();
+		info.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		return "addUI";
 	}
 
 	/** 添加  */
 	public String add() {
-			if (info != null) {
-				infoService.save(info);;
-			}
+		if (info != null) {
+			infoService.save(info);;
+		}
 		return "list";
 	}
 	
 	/** 跳转到编辑页面 */
 	public String editUI() {
 		if(null != info && null != info.getInfoId()) {
-			ActionContext.getContext().put("privilegeMap", Constant.PRIVILEGE_MAP);
-			
+			ActionContext.getContext().put("infoTypeMap", Info.INFO_TYPE_MAP);
 			this.setInfo(infoService.findById(info.getInfoId()));
 		}
 		return "editUI";

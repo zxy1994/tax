@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
     <%@include file="/common/header.jsp"%>
@@ -37,11 +38,13 @@
         <tr>
             <td class="tdBg" width="200px">创建人：</td>
             <td>
-            
+            	${info.creator}
+            	<input type="hidden" name="info.creator" value="${info.creator}"/>
             </td>
             <td class="tdBg" width="200px">创建时间：</td>
             <td>
-            
+            	<s:date name="info.createTime" format="yyyy-MM-dd HH:mm"/>
+             	<s:hidden name="info.createTime"/>
             </td>
         </tr>
     </table>

@@ -43,14 +43,13 @@
             </td>
             <td class="tdBg" width="200px">创建时间：</td>
             <td>
-            	<fmt:formatDate value="${nowDate}" pattern="yyyy-MM-dd HH:ss"/>
-            	<!-- 这个隐藏域的时间也要格式化，不然后台接收参数报错 -->
-            	<input type="hidden" name="info.createTime" 
-            	value="<fmt:formatDate value='${nowDate}' pattern='yyyy-MM-dd HH:ss'/>">
+            	<s:date name="info.createTime" format="yyyy-MM-dd HH:mm"/>
+             	<s:hidden name="info.createTime"/>
             </td>
         </tr>
     </table>
-    
+    <!-- 默认是发布状态 -->
+    <input type="hidden" name="info.state" value="1">
     <div class="tc mt20">
         <input type="submit" class="btnB2" value="保存" />
         &nbsp;&nbsp;&nbsp;&nbsp;
