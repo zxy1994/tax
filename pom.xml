@@ -158,6 +158,12 @@
 	    <version>${struts2.version}</version>
 	</dependency>
 	
+	<!-- ueditor jar-->
+	<dependency>
+		<groupId>com.baidu</groupId>
+  		<artifactId>ueditor</artifactId>
+  		<version>1.0.0</version>
+	</dependency>
 	
   </dependencies>
   
