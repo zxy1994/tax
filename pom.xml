@@ -158,13 +158,29 @@
 	    <version>${struts2.version}</version>
 	</dependency>
 	
-	<!-- ueditor jar-->
+	<!-- 下面为和ueditor相关的 jar-->
 	<dependency>
 		<groupId>com.baidu</groupId>
-  		<artifactId>ueditor</artifactId>
-  		<version>1.0.0</version>
+		<artifactId>ueditor</artifactId>
+		<version>1.0.0</version>
 	</dependency>
-	
+	<!-- poi里面有这个包 -->
+	<!-- <dependency>
+		<groupId>commons-codec</groupId>
+		<artifactId>commons-codec</artifactId>
+		<version>1.9</version>
+	</dependency> -->
+	<dependency>
+		<groupId>org.json</groupId>
+		<artifactId>json</artifactId>
+		<version>20160212</version>
+	</dependency>
+	<!-- struts有这个包 -->
+	<!-- <dependency>
+		<groupId>commons-fileupload</groupId>
+		<artifactId>commons-fileupload</artifactId>
+		<version>1.3.2</version>
+	</dependency> -->
   </dependencies>
   
 	
