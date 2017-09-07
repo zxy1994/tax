@@ -8,11 +8,12 @@
     <script type="text/javascript" charset="utf-8" src="${basePath}js/ueditor/ueditor.all.min.js"> </script>
     <script type="text/javascript" charset="utf-8" src="${basePath}js/ueditor/lang/zh-cn/zh-cn.js"></script>
     <script type="text/javascript">
-    		window.UEDITOR_HOME_URL = "${basePath}js/ueditor/";
-    		var ue = UE.getEditor('editor');
-    		var ue = UE.getEditor('editor',{
-    			emotionLocalization:true
-    		});
+ 		// 配置ueditor的根路径
+		window.UEDITOR_HOME_URL = "${basePath}js/ueditor/";
+		// 配置编辑器,'editor'其实就是textarea的id
+		var ue = UE.getEditor("editor",{
+			emotionLocalization:true	// 开启使用本地表情包
+		});
     </script>
 </head>
 <body class="rightBody">

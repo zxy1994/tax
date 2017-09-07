@@ -35,7 +35,8 @@
   <jsp-config>
   	<!-- 属性组 -->
   	<jsp-property-group>
-  		<url-pattern>*.jsp</url-pattern>
+  		<!-- 这里不要配置*.jsp,否则和和ueditor上传冲突 -->
+  		<url-pattern>/WEB-INF/jsp/*</url-pattern>
   		<!-- 全局引入头文件 -->
   		<include-prelude>/WEB-INF/jsp/base.jsp</include-prelude>
   	</jsp-property-group>
