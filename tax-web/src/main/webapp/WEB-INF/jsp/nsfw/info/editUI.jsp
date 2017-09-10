@@ -8,12 +8,30 @@
     <script type="text/javascript" charset="utf-8" src="${basePath}js/ueditor/ueditor.all.min.js"> </script>
     <script type="text/javascript" charset="utf-8" src="${basePath}js/ueditor/lang/zh-cn/zh-cn.js"></script>
     <script type="text/javascript">
- 		// 配置ueditor的根路径
-		window.UEDITOR_HOME_URL = "${basePath}js/ueditor/";
-		// 配置编辑器,'editor'其实就是textarea的id
-		var ue = UE.getEditor("editor",{
-			emotionLocalization:true	// 开启使用本地表情包
-		});
+		$(function(){
+			var width = $("#editorTd").width();//获取td的宽度，用于设置编辑器宽度
+			// 配置ueditor的根路径
+			window.UEDITOR_HOME_URL = "${basePath}js/ueditor/";
+			// 实例化编辑器,'editor'其实就是textarea的id
+			var ue = UE.getEditor("editor",{
+				emotionLocalization : true	// 开启使用本地表情包
+				,elementPathEnabled : false	// 不显示元素路径
+				,initialFrameWidth : width     //初始化编辑器宽度
+		        ,initialFrameHeight : 400  	//初始化编辑器高度
+		        , toolbars: [[
+		            'fullscreen', 'source', '|', 'undo', 'redo', '|',
+		            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+		            'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+		            'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+		            'directionalityltr', 'directionalityrtl', 'indent', '|',
+		            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+		            'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+		            'simpleupload', 'insertimage', 'emotion', 'map', 'insertframe', 'insertcode','pagebreak', 'template', 'background', '|',
+		            'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+		            'print', 'preview', 'searchreplace', 'drafts', 'help'
+		        ]]
+			});
+		})
     </script>
 </head>
 <body class="rightBody">
@@ -36,7 +54,7 @@
         </tr>
         <tr>
             <td class="tdBg" width="200px">信息内容：</td>
-            <td colspan="3"><s:textarea id="editor" name="info.content" cssStyle="width:90%;height:160px;" /></td>
+            <td colspan="3" id="editorTd"><s:textarea id="editor" name="info.content" cssStyle="width:90%;height:160px;" /></td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">备注：</td>
