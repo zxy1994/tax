@@ -45,5 +45,21 @@ public class InfoServiceImpl implements InfoService {
 	public List<Info> findAll() {
 		return infoDao.findAll();
 	}
-
+	
+	/**
+	 * 修改状态
+	 * @param info
+	 */
+	@Override
+	public void changeStatus(Info info) {
+		try {
+			Info info2 = infoDao.findById(info.getInfoId());
+			info2.setState(info.getState());
+			infoDao.update(info2);
+		} catch (Exception e) {
+			throw new RuntimeException("异步发布service发生异常", e);
+		}
+	}
+	
+	
 }

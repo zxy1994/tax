@@ -42,6 +42,12 @@
   	</jsp-property-group>
   </jsp-config>
   
+  <!-- 配置session相关 -->
+  <session-config>
+  	<!-- session超时设为120分钟 -->
+  	<session-timeout>120</session-timeout>
+  </session-config>
+  
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>

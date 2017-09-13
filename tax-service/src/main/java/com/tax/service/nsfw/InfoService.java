@@ -46,5 +46,11 @@ public interface InfoService {
 	 */
 	public List<Info> findAll();
 
+	/**
+	 * 修改状态
+	 * @param info
+	 */
+	public void changeStatus(Info info);
+
 	
 }

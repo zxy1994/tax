@@ -3,6 +3,9 @@ package com.tax.web.nsfw;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -84,6 +87,22 @@ public class InfoAction extends BaseAction {
 		}
 		return "list";
 	}
+	
+	/** 异步发布 */
+	public String changeStatus() {
+		try {
+			infoService.changeStatus(info);
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setCharacterEncoding("utf-8");
+			response.setContentType("text/html");
+			response.getWriter().write("ok");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return NONE;
+	}
+	
+	
 	
 	
 	

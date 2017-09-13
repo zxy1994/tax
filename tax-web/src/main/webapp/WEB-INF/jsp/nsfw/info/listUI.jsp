@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <%@include file="/common/header.jsp"%>
@@ -36,6 +37,31 @@
 	    		document.forms[0].action = "${basePath}nsfw/info_batchDelete.action";
 		    	document.forms[0].submit();
 	    	}
+	    }
+	    
+	    function doChangeStatus(id ,state){
+	    	var text1 = $("#span_" + id).text().trim();
+	    	var text2 = $("#a_" + id).text().trim();
+	    	var newState = state=='1' ? '0':'1';
+	    	$.ajax({
+	    		url:"${basePath}nsfw/info_changeStatus.action",
+	    		type: "POST",
+	    		data: {"info.state":newState,"info.infoId":id},
+	    		success:function(msg){
+	    			if(msg == "ok"){
+	    				// 成功，交换状态；同时把href上方法的形参给换了。
+	    				$("#span_" + id).text(text2);
+	    				$("#a_" + id).text(text1);
+	    				$("#a_" + id).attr("href","javascript:doChangeStatus('"+id+"','"+newState+"')");
+	    			}else{
+	    				alert("操作失败，请稍后再试！");
+	    			}
+	    		},
+	    		error:function(){
+	    			alert("操作失败，请稍后再试！");
+	    		}
+	    	})
+	    	
 	    }
     </script>
 </head>
@@ -76,12 +102,31 @@
                                 </td>
                                 <td align="center"><s:property value="creator"/></td>
                                 <td align="center"><s:date name="createTime" format="yyyy-MM-dd HH:mm"/></td>
-                                <td align="center"><s:property value="state==1?'发布':'停用'"/></td>
+                                <td align="center">
+                                	<span id="span_${infoId}">
+                                		<c:choose>
+                                			<c:when test="${state==1}">
+                                				发布
+                                			</c:when> 
+                                			<c:otherwise>
+                                				停用
+                                			</c:otherwise>
+                                		</c:choose> 
+                                	</span>
+                                </td>
                                 <td align="center">
                                 	<span >
-                                	
-                                		<a href="#">停用</a>
-                                	
+                                		<a id="a_${infoId}" 
+                                			href="javascript:doChangeStatus('${infoId}','${state}')">                            
+                                		<c:choose>
+                                			<c:when test="${state==0}">
+                                				发布
+                                			</c:when> 
+                                			<c:otherwise>
+                                				停用
+                                			</c:otherwise>
+                                		</c:choose> 
+                                		</a>
                                 	</span>
                                     <a href="javascript:doEdit('<s:property value='infoId'/>')">编辑</a>
                                     <a href="javascript:doDelete('<s:property value='infoId'/>')">删除</a>
