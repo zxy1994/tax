@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tax.core.service.impl.BaseServiceImpl;
 import com.tax.dao.nsfw.RoleDao;
 import com.tax.dao.nsfw.RolePrivilegeDao;
 import com.tax.pojo.nsfw.Role;
@@ -22,26 +23,18 @@ import com.tax.service.nsfw.RoleService;
  */
 
 @Service("roleService")
-public class RoleServiceImpl implements RoleService {
-	@Autowired
+public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleService {
 	private RoleDao roleDao;
 	@Autowired
 	private RolePrivilegeDao rolePrivilegeDao;
 
-	@Override
-	public void save(Role role) {
-		roleDao.save(role);
+	
+	@Autowired
+	public void setRoleDao(RoleDao roleDao) {
+		super.setBaseDao(roleDao);
+		this.roleDao = roleDao;
 	}
 
-	@Override
-	public void update(Role role) {
-		roleDao.update(role);
-	}
-
-	@Override
-	public void deleteById(Serializable id) {
-		roleDao.deleteById(id);
-	}
 
 	@Override
 	public Role findById(Serializable id) {

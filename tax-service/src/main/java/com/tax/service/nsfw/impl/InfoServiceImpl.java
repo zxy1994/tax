@@ -1,11 +1,9 @@
 package com.tax.service.nsfw.impl;
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tax.core.service.impl.BaseServiceImpl;
 import com.tax.dao.nsfw.InfoDao;
 import com.tax.pojo.nsfw.Info;
 import com.tax.service.nsfw.InfoService;
@@ -17,35 +15,15 @@ import com.tax.service.nsfw.InfoService;
  */
 
 @Service("infoService")
-public class InfoServiceImpl implements InfoService {
-	@Autowired
+public class InfoServiceImpl extends BaseServiceImpl<Info> implements InfoService {
 	private InfoDao infoDao;
 	
-	@Override
-	public void save(Info info) {
-		infoDao.save(info);
+	@Autowired
+	public void setInfoDao(InfoDao infoDao) {
+		super.setBaseDao(infoDao);
+		this.infoDao = infoDao;
 	}
 
-	@Override
-	public void update(Info info) {
-		infoDao.update(info);
-	}
-
-	@Override
-	public void deleteById(Serializable id) {
-		infoDao.deleteById(id);
-	}
-
-	@Override
-	public Info findById(Serializable id) {
-		return infoDao.findById(id);
-	}
-
-	@Override
-	public List<Info> findAll() {
-		return infoDao.findAll();
-	}
-	
 	/**
 	 * 修改状态
 	 * @param info

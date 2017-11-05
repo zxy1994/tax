@@ -12,8 +12,10 @@ import com.tax.core.service.BaseService;
  * @date 	2017年10月29日 下午4:53:48
  * @version v1.0
  */
+
 public class BaseServiceImpl<T> implements BaseService<T> {
 	private BaseDao<T> baseDao; // 后续接收子类dao
+	
 	@Override
 	public void save(T entity) {
 		baseDao.save(entity);

@@ -1,7 +1,6 @@
 package com.tax.service.nsfw.impl;
 
 import java.io.File;
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tax.core.service.impl.BaseServiceImpl;
 import com.tax.core.util.ExcelUtils;
 import com.tax.dao.nsfw.UserDao;
 import com.tax.dao.nsfw.UserRoleDao;
@@ -26,37 +26,19 @@ import com.tax.service.nsfw.UserService;
  */
 
 @Service("userService")
-public class UserServiceImpl implements UserService {
-	@Autowired
+public class UserServiceImpl  extends BaseServiceImpl<User> implements UserService {
 	private UserDao userDao;
+	
 	@Autowired
 	private UserRoleDao userRoleDao;
-
-	@Override
-	public void save(User user) {
-		userDao.save(user);
+	
+	@Autowired
+	public void setUserDao(UserDao userDao) {
+		super.setBaseDao(userDao);
+		this.userDao = userDao;
 	}
 
-	@Override
-	public void update(User user) {
-		userDao.update(user);
-	}
-
-	@Override
-	public void deleteById(Serializable id) {
-		userDao.deleteById(id);
-	}
-
-	@Override
-	public User findById(Serializable id) {
-		return userDao.findById(id);
-	}
-
-	@Override
-	public List<User> findAll() {
-		return userDao.findAll();
-	}
-
+	
 	@Override
 	public void importExcel(File userExcel, String userExcelFileName) {
 		try {

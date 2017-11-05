@@ -42,11 +42,11 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 	 */
 	public Session getCurrentSession(){
 		Session session = null;
-		this.currentSession();
 		try {
 			session = getSessionFactory().getCurrentSession();
 		} catch (HibernateException e) {
-			session = getSessionFactory().openSession();
+			throw new RuntimeException("getCurrentSession error", e);
+			//session = getSessionFactory().openSession();
 		}
 		return session;
 	}

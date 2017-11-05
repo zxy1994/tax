@@ -3,14 +3,15 @@ package com.tax.core.service;
 import java.io.Serializable;
 import java.util.List;
 
-
 /**
  * BaseService
  * @author 	ZENG.XIAO.YAN
  * @date 	2017年10月29日 下午4:53:53
  * @version v1.0
  */
+
 public interface BaseService<T> {
+	
 	/**
 	 * 新增
 	 * @param entity
@@ -29,7 +30,6 @@ public interface BaseService<T> {
 	 */
 	public void deleteById(Serializable id);
 
-	
 	/**
 	 * 通过id查找
 	 * @param id
