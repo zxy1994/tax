@@ -1,10 +1,12 @@
 package com.tax.web.nsfw;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,7 +33,15 @@ public class InfoAction extends BaseAction {
 	/** 跳转到列表页面 */
 	public String listUI() {
 		ActionContext.getContext().put("infoTypeMap", Info.INFO_TYPE_MAP);
-		this.setInfoList(infoService.findAll());
+		String hql = "FROM Info i";
+		List<Object> parameters = new ArrayList<>();
+		if(null != info) {
+			if(StringUtils.isNotBlank(info.getTitle())) {
+				hql += " where i.title like ?";
+				parameters.add("%" + info.getTitle() + "%");
+			}
+		}
+		this.setInfoList(infoService.findObjects(hql, parameters));
 		return "listUI";
 	}
 

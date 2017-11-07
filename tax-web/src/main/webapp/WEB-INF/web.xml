@@ -44,8 +44,8 @@
   
   <!-- 配置session相关 -->
   <session-config>
-  	<!-- session超时设为120分钟 -->
-  	<session-timeout>120</session-timeout>
+  	<!-- session超时设为240分钟 -->
+  	<session-timeout>240</session-timeout>
   </session-config>
   
   <welcome-file-list>

@@ -77,4 +77,16 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 		return query.list();
 	}
 
+
+	@Override
+	public List<T> findObjects(String hql, List<Object> parameters) {
+		Session session = getCurrentSession();
+		Query query = session.createQuery(hql);
+		for (int i = 0; i < parameters.size(); i++) {
+			query.setParameter(i, parameters.get(i));
+		}
+		return query.list();
+	}
+	
+	
 }

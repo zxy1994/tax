@@ -13,7 +13,7 @@ import com.tax.core.service.BaseService;
  * @version v1.0
  */
 
-public class BaseServiceImpl<T> implements BaseService<T> {
+public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	private BaseDao<T> baseDao; // 后续接收子类dao
 	
 	@Override
@@ -40,7 +40,19 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	public List<T> findAll() {
 		return baseDao.findAll();
 	}
-
+	
+	
+	/**
+	 * 条件查询
+	 * @param hql		 hql语句
+	 * @param parameters 参数集合
+	 * @return List      list集合
+	 */
+	@Override
+	public List<T> findObjects(String hql, List<Object> parameters) {
+		return baseDao.findObjects(hql, parameters);
+	}
+	
 	public void setBaseDao(BaseDao<T> baseDao) {
 		this.baseDao = baseDao;
 	}

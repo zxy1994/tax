@@ -43,4 +43,14 @@ public interface BaseDao<T> {
 	 * @return List集合
 	 */
 	public List<T> findAll();
+	
+	
+	/**
+	 * 条件查询
+	 * @param hql		 hql语句
+	 * @param parameters 参数集合
+	 * @return List      list集合
+	 */
+	public List<T> findObjects(String hql, List<Object> parameters);
+	
 }
