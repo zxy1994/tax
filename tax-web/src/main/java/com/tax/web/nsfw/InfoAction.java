@@ -1,17 +1,16 @@
 package com.tax.web.nsfw;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.tax.core.action.BaseAction;
+import com.tax.core.util.QueryHelper;
 import com.tax.pojo.nsfw.Info;
 import com.tax.service.nsfw.InfoService;
 
@@ -33,7 +32,7 @@ public class InfoAction extends BaseAction {
 	/** 跳转到列表页面 */
 	public String listUI() {
 		ActionContext.getContext().put("infoTypeMap", Info.INFO_TYPE_MAP);
-		String hql = "FROM Info i";
+		/*String hql = "FROM Info i";
 		List<Object> parameters = new ArrayList<>();
 		if(null != info) {
 			if(StringUtils.isNotBlank(info.getTitle())) {
@@ -41,7 +40,12 @@ public class InfoAction extends BaseAction {
 				parameters.add("%" + info.getTitle() + "%");
 			}
 		}
-		this.setInfoList(infoService.findObjects(hql, parameters));
+		this.setInfoList(infoService.findObjects(hql, parameters));*/
+		QueryHelper hq = new QueryHelper(Info.class, "i");
+		if(null != info) {
+			hq.addCondition("i.title like ?", "%" + info.getTitle() +"%");
+		}
+		this.setInfoList(infoService.findObjects(hq));
 		return "listUI";
 	}
 

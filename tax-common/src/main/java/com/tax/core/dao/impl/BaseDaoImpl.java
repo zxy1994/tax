@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import com.tax.core.dao.BaseDao;
+import com.tax.core.util.QueryHelper;
 
 /**
  * BaseDaoImpl
@@ -23,7 +24,7 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 	
 	private Class<T> clazz;
 	
-	// 按照类型自动注入SessionFactory; 在实例化的时候,Spring按照形参的类型自动注入
+	/** 按照类型自动注入SessionFactory; 在实例化的时候,Spring按照形参的类型自动注入 */
 	@Autowired
 	public void setMySessionFactory(SessionFactory sessionFactory){
 		setSessionFactory(sessionFactory);
@@ -82,10 +83,22 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 	public List<T> findObjects(String hql, List<Object> parameters) {
 		Session session = getCurrentSession();
 		Query query = session.createQuery(hql);
-		for (int i = 0; i < parameters.size(); i++) {
-			query.setParameter(i, parameters.get(i));
+		if(parameters != null && parameters.size() > 0) {
+			for (int i = 0; i < parameters.size(); i++) {
+				query.setParameter(i, parameters.get(i));
+			}
 		}
 		return query.list();
+	}
+	
+	/**
+	 * 条件查询--使用查询助手
+	 * @param qh 		查询助手对象
+	 * @return List      list集合
+	 */
+	@Override
+	public List<T> findObjects(QueryHelper qh) {
+		return this.findObjects(qh.getListQueryHql(), qh.getParameters());
 	}
 	
 	

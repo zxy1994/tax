@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.tax.core.dao.BaseDao;
 import com.tax.core.service.BaseService;
+import com.tax.core.util.QueryHelper;
 
 /**
  * BaseServiceImpl
@@ -15,6 +16,11 @@ import com.tax.core.service.BaseService;
 
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	private BaseDao<T> baseDao; // 后续接收子类dao
+	/** 该方法给子类调用 */
+	protected void setBaseDao(BaseDao<T> baseDao) {
+		this.baseDao = baseDao;
+	}
+	
 	
 	@Override
 	public void save(T entity) {
@@ -53,9 +59,17 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		return baseDao.findObjects(hql, parameters);
 	}
 	
-	public void setBaseDao(BaseDao<T> baseDao) {
-		this.baseDao = baseDao;
+	/**
+	 * 条件查询--使用查询助手
+	 * @param qh 		查询助手对象
+	 * @return List      list集合
+	 */
+	public List<T> findObjects(QueryHelper qh) {
+		return baseDao.findObjects(qh);
 	}
+	
+	
+	
 	
 
 }

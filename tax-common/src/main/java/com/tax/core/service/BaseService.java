@@ -3,6 +3,8 @@ package com.tax.core.service;
 import java.io.Serializable;
 import java.util.List;
 
+import com.tax.core.util.QueryHelper;
+
 /**
  * BaseService
  * @author 	ZENG.XIAO.YAN
@@ -51,4 +53,11 @@ public interface BaseService<T> {
 	 * @return List      list集合
 	 */
 	public List<T> findObjects(String hql, List<Object> parameters);
+	
+	/**
+	 * 条件查询--使用查询助手
+	 * @param qh 		查询助手对象
+	 * @return List      list集合
+	 */
+	public List<T> findObjects(QueryHelper qh);
 }
