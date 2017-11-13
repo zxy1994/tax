@@ -80,6 +80,7 @@
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut2" />
 	</aop:config>
 	
+	<bean class="com.tax.core.util.SpringConfigTool"/>
 	
 	<!-- 导入其他资源文件 -->
 	<import resource="classpath:tax/spring/*.xml"/>

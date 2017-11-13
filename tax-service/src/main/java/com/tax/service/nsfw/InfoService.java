@@ -16,6 +16,5 @@ public interface InfoService extends BaseService<Info> {
 	 * @param info
 	 */
 	public void changeStatus(Info info);
-
 	
 }

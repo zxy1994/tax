@@ -1,9 +1,16 @@
 package com.tax.service.nsfw.impl;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
 import com.tax.core.service.impl.BaseServiceImpl;
+import com.tax.core.util.SpringConfigTool;
 import com.tax.dao.nsfw.InfoDao;
 import com.tax.pojo.nsfw.Info;
 import com.tax.service.nsfw.InfoService;
@@ -17,7 +24,6 @@ import com.tax.service.nsfw.InfoService;
 @Service("infoService")
 public class InfoServiceImpl extends BaseServiceImpl<Info> implements InfoService {
 	private InfoDao infoDao;
-	
 	@Autowired
 	public void setInfoDao(InfoDao infoDao) {
 		super.setBaseDao(infoDao);
@@ -38,6 +44,6 @@ public class InfoServiceImpl extends BaseServiceImpl<Info> implements InfoServic
 			throw new RuntimeException("异步发布service发生异常", e);
 		}
 	}
-	
-	
+
 }
+

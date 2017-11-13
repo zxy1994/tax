@@ -1,12 +1,12 @@
 package com.tax.web.nsfw;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,7 +34,7 @@ public class InfoAction extends BaseAction {
 	/** 跳转到列表页面 */
 	public String listUI() {
 		ActionContext.getContext().put("infoTypeMap", Info.INFO_TYPE_MAP);
-		/*String hql = "FROM Info i";
+		String hql = "FROM Info i";
 		List<Object> parameters = new ArrayList<>();
 		if(null != info) {
 			if(StringUtils.isNotBlank(info.getTitle())) {
@@ -42,16 +42,12 @@ public class InfoAction extends BaseAction {
 				parameters.add("%" + info.getTitle() + "%");
 			}
 		}
-		this.setInfoList(infoService.findObjects(hql, parameters));*/
+		this.setInfoList(infoService.findObjects(hql, parameters));
 		QueryHelper hq = new QueryHelper(Info.class, "i");
 		if(null != info) {
 			hq.addCondition("i.title like ?", "%" + info.getTitle() +"%");
 		}
 		this.setInfoList(infoService.findObjects(hq));
-		System.out.println("--------------");
-		ExecutorService executorService = Executors.newFixedThreadPool(1);
-		executorService.execute(new MyTestThread(infoService));
-		executorService.shutdown();
 		return "listUI";
 	}
 	
@@ -149,18 +145,4 @@ public class InfoAction extends BaseAction {
 	}
 
 }
-class MyTestThread implements Runnable{
-	private InfoService infoService;
 
-	public MyTestThread(InfoService infoService) {
-		super();
-		this.infoService = infoService;
-	}
-
-	@Override
-	public void run() {
-		QueryHelper hq = new QueryHelper(Info.class, "i");
-		System.out.println(infoService.findObjects(hq));
-	}
-	
-}
