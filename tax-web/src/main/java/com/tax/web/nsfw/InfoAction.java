@@ -2,6 +2,8 @@ package com.tax.web.nsfw;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,7 +48,16 @@ public class InfoAction extends BaseAction {
 			hq.addCondition("i.title like ?", "%" + info.getTitle() +"%");
 		}
 		this.setInfoList(infoService.findObjects(hq));
+		System.out.println("--------------");
+		ExecutorService executorService = Executors.newFixedThreadPool(1);
+		executorService.execute(new MyTestThread(infoService));
+		executorService.shutdown();
 		return "listUI";
+	}
+	
+	public void myTest(){
+		QueryHelper hq = new QueryHelper(Info.class, "i");
+		System.out.println(infoService.findObjects(hq));
 	}
 
 	/** 跳转到添加页面 */
@@ -137,8 +148,19 @@ public class InfoAction extends BaseAction {
 		this.info = info;
 	}
 
-	
-	
+}
+class MyTestThread implements Runnable{
+	private InfoService infoService;
 
+	public MyTestThread(InfoService infoService) {
+		super();
+		this.infoService = infoService;
+	}
 
+	@Override
+	public void run() {
+		QueryHelper hq = new QueryHelper(Info.class, "i");
+		System.out.println(infoService.findObjects(hq));
+	}
+	
 }
