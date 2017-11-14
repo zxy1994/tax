@@ -1,10 +1,11 @@
 package com.tax.web.nsfw;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
@@ -29,23 +30,31 @@ public class InfoAction extends BaseAction {
 	private InfoService infoService;
 	private List<Info> infoList;
 	private Info info;
+	private String fromType; //判断是从哪里进来的 ：n代表从导航进来的，s代表是从搜索
 	
-	
-	/** 跳转到列表页面 */
-	public String listUI() {
+	/** 跳转到列表页面 
+	 * @throws UnsupportedEncodingException */
+	public String listUI() throws UnsupportedEncodingException {
+		HttpSession session = ServletActionContext.getRequest().getSession();
+		Info queryInfo;
+		// 判断是不是从导航里进来的
+		if("n".equals(fromType)){
+			queryInfo = null;
+			session.setAttribute("queryInfo",queryInfo);
+		}else if("s".equals(fromType)){
+			queryInfo = info;
+			session.setAttribute("queryInfo", queryInfo);
+		}else {
+			// 走这里，说明使重定象进来的，那么查询条件从session中拿
+			queryInfo = (Info) session.getAttribute("queryInfo");
+		}
+		
 		ActionContext.getContext().put("infoTypeMap", Info.INFO_TYPE_MAP);
 		String hql = "FROM Info i";
-		List<Object> parameters = new ArrayList<>();
-		if(null != info) {
-			if(StringUtils.isNotBlank(info.getTitle())) {
-				hql += " where i.title like ?";
-				parameters.add("%" + info.getTitle() + "%");
-			}
-		}
-		this.setInfoList(infoService.findObjects(hql, parameters));
 		QueryHelper hq = new QueryHelper(Info.class, "i");
-		if(null != info) {
-			hq.addCondition("i.title like ?", "%" + info.getTitle() +"%");
+		if(null != queryInfo && StringUtils.isNotBlank(queryInfo.getTitle())) {
+			hq.addCondition("i.title like ?", "%" + queryInfo.getTitle() +"%");
+			this.setInfo(queryInfo);//用于重定向后的回显
 		}
 		this.setInfoList(infoService.findObjects(hq));
 		return "listUI";
@@ -125,8 +134,6 @@ public class InfoAction extends BaseAction {
 	
 	
 	
-	
-	
 	/** setter and getter method */
 	public List<Info> getInfoList() {
 		return infoList;
@@ -144,5 +151,15 @@ public class InfoAction extends BaseAction {
 		this.info = info;
 	}
 
+	public String getFromType() {
+		return fromType;
+	}
+
+	public void setFromType(String fromType) {
+		this.fromType = fromType;
+	}
+
+	
+	
 }
 

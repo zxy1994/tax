@@ -66,7 +66,7 @@
 	    
 	    // 条件查询
 	    function doSearch() {
-	    	document.forms[0].action = "${basePath}nsfw/info_listUI.action";
+	    	document.forms[0].action = "${basePath}nsfw/info_listUI.action?fromType=s";
 	    	document.forms[0].submit();
 	    }
 	    
