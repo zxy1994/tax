@@ -78,7 +78,8 @@ public class ZipUtils {
 				zos.closeEntry();
 			}else {
 				for (File file : listFiles) {
-					// 注意：name需要带上父文件夹的名字，不然最后压缩包中就没有文件夹了
+					// 注意：name需要带上父文件夹的名字加一斜杠,
+					// 不然最后压缩包中就不能保留原来的文件结构,即：所有文件都跑到压缩包根目录下了
 					compress(file, zos, name + "/" + file.getName());
 				}
 			}
