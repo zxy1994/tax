@@ -77,7 +77,7 @@ public class FTL2ExcelByFreeMarker extends ActionSupport {
 				HttpServletResponse response = ServletActionContext.getResponse();
 				response.setContentType("application/zip");
 				response.setHeader("Content-Disposition", "attachment; filename=excel.zip");  
-				ZipUtils.toZip(request.getRealPath("/")+"/download", response.getOutputStream());
+				ZipUtils.toZip(request.getRealPath("/")+"/download", response.getOutputStream(),false);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
