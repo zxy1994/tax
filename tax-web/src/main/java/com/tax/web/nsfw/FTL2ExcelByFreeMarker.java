@@ -84,7 +84,7 @@ public class FTL2ExcelByFreeMarker extends ActionSupport {
 				response.setHeader("Content-Disposition", "attachment; filename=excel.zip");  
 				System.out.println(temDir.getPath());
 				/** 4.调用工具类，下载zip压缩包 */
-				ZipUtils.toZip(temDir.getPath(), response.getOutputStream());
+				ZipUtils.toZip(temDir.getPath(), response.getOutputStream(),false);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
