@@ -5,7 +5,10 @@
 
 <struts>
 	<package name="ftl-action" namespace="/nsfw" extends="struts-default">
-		<action name="testExport" class="com.tax.web.nsfw.FTL2ExcelByFreeMarker" method="export">
+		<action name="testZip" class="com.tax.web.nsfw.FTL2ExcelByFreeMarker" method="exportZip">
+		<result>/WEB-INF/jsp/index.jsp</result>
+		</action>
+		<action name="testExcel" class="com.tax.web.nsfw.FTL2ExcelByFreeMarker" method="exportExcel">
 		<result>/WEB-INF/jsp/index.jsp</result>
 		</action>
 	</package>
