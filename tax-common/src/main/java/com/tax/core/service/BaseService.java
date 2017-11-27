@@ -3,6 +3,7 @@ package com.tax.core.service;
 import java.io.Serializable;
 import java.util.List;
 
+import com.tax.core.util.PageResult;
 import com.tax.core.util.QueryHelper;
 
 /**
@@ -60,4 +61,13 @@ public interface BaseService<T> {
 	 * @return List      list集合
 	 */
 	public List<T> findObjects(QueryHelper qh);
+	
+	/**
+	 * 分页查询
+	 * @param qh 查询助手
+	 * @param pageNo 当前页
+	 * @param pageSize 页大小
+	 * @return 分页结果对象
+	 */
+	public PageResult<T> findByPage(QueryHelper qh, int pageNo, int pageSize);
 }

@@ -2,6 +2,7 @@ package com.tax.core.dao.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import com.tax.core.dao.BaseDao;
+import com.tax.core.util.PageResult;
 import com.tax.core.util.QueryHelper;
 
 /**
@@ -101,5 +103,46 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 		return this.findObjects(qh.getListQueryHql(), qh.getParameters());
 	}
 	
+	/**
+	 * 分页查询
+	 * @param qh 查询助手
+	 * @param pageNo 当前页
+	 * @param pageSize 页大小
+	 * @return 分页结果对象
+	 */
+	@Override
+	public PageResult<T> findByPage(QueryHelper qh, int pageNo, int pageSize) {
+		Session session = this.getCurrentSession();
+		List<T> list = new ArrayList<>();
+		/**1.先查询出总记录数 */
+		List<Object> parameters = qh.getParameters();
+		Query countQuery = session.createQuery(qh.getCountHql());
+		if(null != parameters){
+			int parametesSize = parameters.size();
+			for (int i = 0; i < parametesSize; i++) {
+				countQuery.setParameter(i, parameters.get(i));
+			}
+		}
+		long totalCount = (long) countQuery.uniqueResult();
+		if(totalCount > 0){
+			/**2.查询出当前页数据 */
+			Query listQuery = session.createQuery(qh.getListQueryHql());
+			
+			if(null != parameters){
+				int parametesSize = parameters.size();
+				for (int i = 0; i < parametesSize; i++) {
+					listQuery.setParameter(i, parameters.get(i));
+				}
+			}
+			if(pageNo == 0) {
+				pageNo = 1;
+			}
+			listQuery.setFirstResult((pageNo - 1) * pageSize);
+			listQuery.setMaxResults(pageSize);
+			// 当前页的数据
+			list = listQuery.list();
+		}
+		return new PageResult<>(pageNo, totalCount, pageSize, list);
+	}
 	
 }

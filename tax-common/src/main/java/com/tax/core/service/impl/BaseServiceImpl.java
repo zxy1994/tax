@@ -1,10 +1,15 @@
 package com.tax.core.service.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 import com.tax.core.dao.BaseDao;
 import com.tax.core.service.BaseService;
+import com.tax.core.util.PageResult;
 import com.tax.core.util.QueryHelper;
 
 /**
@@ -68,6 +73,17 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		return baseDao.findObjects(qh);
 	}
 	
+	/**
+	 * 分页查询
+	 * @param qh 查询助手
+	 * @param pageNo 当前页
+	 * @param pageSize 页大小
+	 * @return 分页结果对象
+	 */
+	@Override
+	public PageResult<T> findByPage(QueryHelper qh, int pageNo, int pageSize) {
+		return baseDao.findByPage(qh, pageNo, pageSize);
+	}
 	
 	
 	

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.tax.core.action.BaseAction;
+import com.tax.core.util.PageResult;
 import com.tax.core.util.QueryHelper;
 import com.tax.pojo.nsfw.Info;
 import com.tax.service.nsfw.InfoService;
@@ -56,6 +57,8 @@ public class InfoAction extends BaseAction {
 			hq.addCondition("i.title like ?", "%" + queryInfo.getTitle() +"%");
 			this.setInfo(queryInfo);//用于重定向后的回显
 		}
+		hq.addOrderByProperty("i.id", QueryHelper.ORDER_BY_DESC);
+		PageResult<Info> findByPage = infoService.findByPage(hq, 2, 2);
 		this.setInfoList(infoService.findObjects(hq));
 		return "listUI";
 	}
