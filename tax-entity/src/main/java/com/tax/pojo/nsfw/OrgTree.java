@@ -72,5 +72,11 @@ public class OrgTree implements Serializable {
 	public String getState() {
 		return getIsParent() ? "closed" : "open";
 	}
+
+	@Override
+	public String toString() {
+		return "OrgTree [id=" + id + ", title=" + title + ", pId=" + pId + "]";
+	}
+	
 	
 }
