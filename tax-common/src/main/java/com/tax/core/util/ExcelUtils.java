@@ -3,10 +3,10 @@ package com.tax.core.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -159,39 +159,46 @@ public class ExcelUtils {
 		Workbook wb = isExcel03 ? new HSSFWorkbook(fis) : new XSSFWorkbook(fis);
 		// 读取工作表
 		Sheet sheet = wb.getSheetAt(0);	
+		
 		List<ArrayList<String>> resultData = new ArrayList<ArrayList<String>>();	//存放返回数据
 		// 开始每行的读取
 		for (int i = 0; i <= sheet.getLastRowNum(); i++) {
 			Row row = sheet.getRow(i);
-			Iterator<Cell> iterator = row.cellIterator();
 			ArrayList<String> rowData = new ArrayList<>();
-			// 迭代每一行的单元格
-			while(iterator.hasNext()){
-				Cell cell = iterator.next();
+			short lastCellNum = row.getLastCellNum();
+			for (int j = 0; j < lastCellNum; j++) {
+				Cell cell = row.getCell(j);
 				String cellValue = null;
-				switch (cell.getCellType()) {
-					case Cell.CELL_TYPE_BLANK:		// 空白
-						cellValue = null;
-						break;
-					case Cell.CELL_TYPE_STRING:		// 文本
-						cellValue = cell.getStringCellValue();
-						break;
-					case Cell.CELL_TYPE_NUMERIC:	// 数字或者日期
-						if(DateUtil.isCellDateFormatted(cell)){		// 是否是日期
-							Date date = cell.getDateCellValue();
-							cellValue = date == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-						} else {
-							//防止变成因为数字太长变成科学计数法
-							cell.setCellType(CellType.STRING);
+				if(null != cell){
+					switch (cell.getCellType()) {
+						case Cell.CELL_TYPE_BLANK:		// 空白
+							cellValue = null;
+							break;
+						case Cell.CELL_TYPE_STRING:		// 文本
 							cellValue = cell.getStringCellValue();
-						}
-						break;
-					case Cell.CELL_TYPE_BOOLEAN:	// 布尔型
-						cellValue = String.valueOf(cell.getBooleanCellValue());
-						break;
-					default:
-						cellValue = null;
-						break;
+							break;
+						case Cell.CELL_TYPE_NUMERIC:	// 数字或者日期
+							if(DateUtil.isCellDateFormatted(cell)){		// 是否是日期
+								Date date = cell.getDateCellValue();
+								cellValue = date == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+							} else {
+								//防止变成因为数字太长变成科学计数法
+								cell.setCellType(CellType.STRING);
+								if(isExcel03){
+									cellValue = cell.getStringCellValue();
+								} else {
+									BigDecimal bd = new BigDecimal(cell.getStringCellValue());
+									cellValue = bd.toPlainString();
+								}
+							}
+							break;
+						case Cell.CELL_TYPE_BOOLEAN:	// 布尔型
+							cellValue = String.valueOf(cell.getBooleanCellValue());
+							break;
+						default:
+							cellValue = null;
+							break;
+					}
 				}
 				rowData.add(cellValue); // 每个单元格数据存入行数据集合
 			}
@@ -203,4 +210,9 @@ public class ExcelUtils {
 		return resultData;
 	}
 	
+	public static void main(String[] args) throws IOException {
+		File file = new File("c:/test2.xlsx");
+		List<ArrayList<String>> list = ExcelUtils.parseExcel(file, "test.xlsx");
+		System.out.println(list);
+	}
 }
