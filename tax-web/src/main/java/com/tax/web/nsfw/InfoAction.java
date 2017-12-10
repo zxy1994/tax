@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.tax.core.action.BaseAction;
-import com.tax.core.util.PageResult;
 import com.tax.core.util.QueryHelper;
 import com.tax.pojo.nsfw.Info;
 import com.tax.service.nsfw.InfoService;
@@ -40,26 +39,28 @@ public class InfoAction extends BaseAction {
 		Info queryInfo;
 		// 判断是不是从导航里进来的
 		if("n".equals(fromType)){
+			// 从导航进来的，直接把查询条件清空，并覆盖session的值
 			queryInfo = null;
 			session.setAttribute("queryInfo",queryInfo);
 		}else if("s".equals(fromType)){
+			// 如果请求是从搜索栏那里进来的，查询条件已经被封装成实体了
 			queryInfo = info;
 			session.setAttribute("queryInfo", queryInfo);
 		}else {
-			// 走这里，说明使重定象进来的，那么查询条件从session中拿
+			// 走这里，说明是重定象进来的，那么查询条件从session中拿
 			queryInfo = (Info) session.getAttribute("queryInfo");
 		}
-		
+		// 这个infoTypeMap需要初始化，直接给页面使用
 		ActionContext.getContext().put("infoTypeMap", Info.INFO_TYPE_MAP);
-		String hql = "FROM Info i";
+		// 使用查询助手
 		QueryHelper hq = new QueryHelper(Info.class, "i");
 		if(null != queryInfo && StringUtils.isNotBlank(queryInfo.getTitle())) {
 			hq.addCondition("i.title like ?", "%" + queryInfo.getTitle() +"%");
-			this.setInfo(queryInfo);//用于重定向后的回显
+			this.setInfo(queryInfo);		//用于回显
 		}
 		hq.addOrderByProperty("i.id", QueryHelper.ORDER_BY_DESC);
-		PageResult<Info> findByPage = infoService.findByPage(hq, 2, 2);
-		this.setInfoList(infoService.findObjects(hq));
+		// 调用Service 查询分页后的结果
+		pageResult = infoService.findByPage(hq, getPageNo(), getPageSize());
 		return "listUI";
 	}
 	

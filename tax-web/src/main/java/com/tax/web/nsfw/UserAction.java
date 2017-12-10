@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.opensymphony.xwork2.ActionContext;
 import com.tax.core.action.BaseAction;
 import com.tax.core.util.ExcelUtils;
+import com.tax.core.util.QueryHelper;
 import com.tax.pojo.nsfw.Role;
 import com.tax.pojo.nsfw.User;
 import com.tax.pojo.nsfw.UserRole;
@@ -57,7 +58,8 @@ public class UserAction extends BaseAction {
 	
 	/** 跳转到列表页面 */
 	public String listUI() {
-		this.setUserList(userService.findAll());
+		//this.setUserList(userService.findAll());
+		pageResult = userService.findByPage(new QueryHelper(User.class, "u"), getPageNo(), getPageSize());
 		return "listUI";
 	}
 

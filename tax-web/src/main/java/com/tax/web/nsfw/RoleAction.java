@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.opensymphony.xwork2.ActionContext;
 import com.tax.core.action.BaseAction;
 import com.tax.core.constant.Constant;
+import com.tax.core.util.QueryHelper;
 import com.tax.pojo.nsfw.Role;
 import com.tax.service.nsfw.RoleService;
 
@@ -31,7 +32,8 @@ public class RoleAction extends BaseAction {
 	/** 跳转到列表页面 */
 	public String listUI() {
 		ActionContext.getContext().put("privilegeMap", Constant.PRIVILEGE_MAP);
-		this.setRoleList(roleService.findAll());
+		//this.setRoleList(roleService.findAll());
+		pageResult = roleService.findByPage(new QueryHelper(Role.class, "r"), getPageNo(), getPageSize());
 		return "listUI";
 	}
 

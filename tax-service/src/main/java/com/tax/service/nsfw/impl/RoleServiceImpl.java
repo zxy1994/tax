@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tax.core.service.impl.BaseServiceImpl;
+import com.tax.core.util.PageResult;
+import com.tax.core.util.QueryHelper;
 import com.tax.dao.nsfw.RoleDao;
 import com.tax.dao.nsfw.RolePrivilegeDao;
 import com.tax.pojo.nsfw.Role;
@@ -57,6 +59,22 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
 			}
 		}
 		return list;
+	}
+	
+	@Override
+	public PageResult<Role> findByPage(QueryHelper qh, int pageNo, int pageSize) {
+		PageResult<Role> pageResult = roleDao.findByPage(qh, pageNo, pageSize);
+		if(pageResult.getItems().size() > 0){
+			List<Role> list = pageResult.getItems();
+			// service层session还未关闭，把延迟加载的属性获取一遍，就ok了
+			for (Role role : list) {
+				Set<RolePrivilege> set = role.getRolePrivileges();
+				for (RolePrivilege rolePrivilege : set) {
+					rolePrivilege.getId();
+				}
+			}
+		}
+		return pageResult;
 	}
 	
 	/**

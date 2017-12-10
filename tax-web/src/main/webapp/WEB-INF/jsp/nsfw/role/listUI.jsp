@@ -41,6 +41,7 @@
     	}
     }
   	
+    var listUrl = "${basePath}nsfw/role_listUI.action"
     </script>
 </head>
 <body class="rightBody">
@@ -70,7 +71,7 @@
                             <td width="120" align="center">操作</td>
                         </tr>
                        		
-                        <c:forEach var="role" items="${roleList}">
+                        <c:forEach var="role" items="${pageResult.items}">
                        		 <tr  bgcolor="f8f8f8"  >
                                 <td align="center"><input type="checkbox" name="selectedRow" value="${role.roleId}"/></td>
                                 <td align="center">${role.name}</td>
@@ -99,19 +100,8 @@
                     </table>
                 </div>
             </div>
-			<div class="c_pate" style="margin-top: 5px;">
-		<table width="100%" class="pageDown" border="0" cellspacing="0"
-			cellpadding="0">
-			<tr>
-				<td align="right">
-                 	总共1条记录，当前第 1 页，共 1 页 &nbsp;&nbsp;
-                            <a href="#">上一页</a>&nbsp;&nbsp;<a href="#">下一页</a>
-					到&nbsp;<input type="text" style="width: 30px;" onkeypress="if(event.keyCode == 13){doGoPage(this.value);}" min="1"
-					max="" value="1" /> &nbsp;&nbsp;
-			    </td>
-			</tr>
-		</table>	
-        </div>
+         <!-- 引入分页jsp -->
+        <jsp:include page="/common/pageNavigation.jsp"></jsp:include>
         </div>
     </div>
 </form>
