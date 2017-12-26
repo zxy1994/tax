@@ -189,8 +189,9 @@ public class ZipUtils {
 					while ((len = is.read(buf)) != -1) {
 						fos.write(buf, 0, len);
 					}
-					is.close();
+					// 关流顺序，先打开的后关闭
 					fos.close();
+					is.close();
 				}
 			}
 			long end = System.currentTimeMillis();
@@ -212,20 +213,24 @@ public class ZipUtils {
 	
 	
 	
-	public static void main(String[] args) throws Exception {
-		/** 测试压缩方法1  */
+	/*public static void main(String[] args) throws Exception {
+		*//** 测试压缩方法1  *//*
 		FileOutputStream fos1 = new FileOutputStream(new File("c:/mytest01.zip"));
 		ZipUtils.toZip("D:/log", fos1,true);
 		
-		/** 测试压缩方法2  */
+		*//** 测试压缩方法2  *//*
 		List<File> fileList = new ArrayList<>();
 		fileList.add(new File("D:/Java/jdk1.7.0_45_64bit/bin/jar.exe"));
 		fileList.add(new File("D:/Java/jdk1.7.0_45_64bit/bin/java.exe"));
 		FileOutputStream fos2 = new FileOutputStream(new File("c:/mytest02.zip"));
 		ZipUtils.toZip(fileList, fos2);
 		
-		/** 测试解压缩方法  */
+		*//** 测试解压缩方法  *//*
 		File srcFile = new File("D:/ziptmp/udacs-hw-proxy-test.zip");
 		ZipUtils.unZip(srcFile, "c:/unzip");
+	}*/
+	public static void main(String[] args) {
+		File file = new File("c:\\汇总申报样例.zip");
+		ZipUtils.unZip(file, "d:/");
 	}
 }
