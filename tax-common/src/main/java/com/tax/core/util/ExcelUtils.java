@@ -164,45 +164,47 @@ public class ExcelUtils {
 		// 开始每行的读取
 		for (int i = 0; i <= sheet.getLastRowNum(); i++) {
 			Row row = sheet.getRow(i);
-			ArrayList<String> rowData = new ArrayList<>();
-			short lastCellNum = row.getLastCellNum();
-			for (int j = 0; j < lastCellNum; j++) {
-				Cell cell = row.getCell(j);
-				String cellValue = null;
-				if(null != cell){
-					switch (cell.getCellType()) {
-						case Cell.CELL_TYPE_BLANK:		// 空白
-							cellValue = null;
-							break;
-						case Cell.CELL_TYPE_STRING:		// 文本
-							cellValue = cell.getStringCellValue();
-							break;
-						case Cell.CELL_TYPE_NUMERIC:	// 数字或者日期
-							if(DateUtil.isCellDateFormatted(cell)){		// 是否是日期
-								Date date = cell.getDateCellValue();
-								cellValue = date == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-							} else {
-								//防止变成因为数字太长变成科学计数法
-								cell.setCellType(CellType.STRING);
-								if(isExcel03){
-									cellValue = cell.getStringCellValue();
+			if(null != row) {
+				ArrayList<String> rowData = new ArrayList<>();
+				short lastCellNum = row.getLastCellNum();
+				for (int j = 0; j < lastCellNum; j++) {
+					Cell cell = row.getCell(j);
+					String cellValue = null;
+					if(null != cell){
+						switch (cell.getCellType()) {
+							case Cell.CELL_TYPE_BLANK:		// 空白
+								cellValue = null;
+								break;
+							case Cell.CELL_TYPE_STRING:		// 文本
+								cellValue = cell.getStringCellValue();
+								break;
+							case Cell.CELL_TYPE_NUMERIC:	// 数字或者日期
+								if(DateUtil.isCellDateFormatted(cell)){		// 是否是日期
+									Date date = cell.getDateCellValue();
+									cellValue = date == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
 								} else {
-									BigDecimal bd = new BigDecimal(cell.getStringCellValue());
-									cellValue = bd.toPlainString();
+									//防止变成因为数字太长变成科学计数法
+									cell.setCellType(CellType.STRING);
+									if(isExcel03){
+										cellValue = cell.getStringCellValue();
+									} else {
+										BigDecimal bd = new BigDecimal(cell.getStringCellValue());
+										cellValue = bd.toPlainString();
+									}
 								}
-							}
-							break;
-						case Cell.CELL_TYPE_BOOLEAN:	// 布尔型
-							cellValue = String.valueOf(cell.getBooleanCellValue());
-							break;
-						default:
-							cellValue = null;
-							break;
+								break;
+							case Cell.CELL_TYPE_BOOLEAN:	// 布尔型
+								cellValue = String.valueOf(cell.getBooleanCellValue());
+								break;
+							default:
+								cellValue = null;
+								break;
+						}
 					}
+					rowData.add(cellValue); // 每个单元格数据存入行数据集合
 				}
-				rowData.add(cellValue); // 每个单元格数据存入行数据集合
+				resultData.add(rowData);	// 每行数据存入返回数据集合
 			}
-			resultData.add(rowData);	// 每行数据存入返回数据集合
 		}
 		// 关流
 		wb.close();
